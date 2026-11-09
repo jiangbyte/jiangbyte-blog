@@ -4,7 +4,6 @@ const ARTICLE_PREFIXES = [
   'posts/',
   'projects/',
   'source-reading/',
-  'kaoyan/',
   'soft-exam/',
   'database/',
   'career/',

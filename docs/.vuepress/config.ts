@@ -3,11 +3,15 @@ import { defineUserConfig } from 'vuepress'
 import { hopeTheme } from 'vuepress-theme-hope'
 import { navbar, sidebar } from './catalog'
 import { isSiteArticle } from './articleFilter'
+import { filenameMetaPlugin } from './plugins/filenameMeta'
 
 export default defineUserConfig({
   lang: 'zh-CN',
   title: '摸鱼猫泡泡',
   description: '摸鱼猫泡泡：记录 Java、工具与工程实践。',
+
+  // 无 date 时按文件名 YYYY-MM-DD- 补日期（README 除外）
+  plugins: [filenameMetaPlugin()],
 
   head: [
     ['meta', { name: 'keywords', content: '摸鱼猫泡泡,Charlie,技术文档,Java,Git,VuePress' }],
@@ -186,8 +190,8 @@ export default defineUserConfig({
           if (frontmatter.article === true) return true
           return isSiteArticle(filePathRelative)
         },
-        // 关闭正文截取；卡片概述只用 frontmatter.description
-        excerptLength: 0,
+        // 无 description/excerpt 时从正文抽摘要；有 YAML description 由 filenameMeta 写入 excerpt 优先
+        excerptLength: 160,
         // 避免占用站点其它路径；导航里「文章时间线」指向此处
         timeline: '/blog-timeline/',
       },

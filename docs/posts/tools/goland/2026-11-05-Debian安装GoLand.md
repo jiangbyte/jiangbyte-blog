@@ -1,6 +1,5 @@
 ---
 title: "Debian 安装 GoLand"
-date: 2026-11-05
 description: "用官方 Linux tar.gz 安装 GoLand：解压到 ~/workspace/apps/goland，并创建桌面入口。"
 category: 工具
 tag: [GoLand, JetBrains, Debian]
