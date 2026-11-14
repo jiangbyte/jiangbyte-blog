@@ -1,0 +1,5 @@
+<template><div></div></template>
+<script>
+export const _pageData = JSON.parse("{\"path\":\"/tag/conda/\",\"title\":\"标签: Conda\",\"lang\":\"zh-CN\",\"frontmatter\":{\"dir\":{\"index\":false},\"index\":false,\"feed\":false,\"sitemap\":false,\"title\":\"标签: Conda\",\"blog\":{\"type\":\"category\",\"name\":\"Conda\",\"key\":\"tag\"},\"layout\":\"Blog\",\"head\":[[\"script\",{\"type\":\"application/ld+json\"},\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"WebPage\\\",\\\"name\\\":\\\"标签: Conda\\\"}\"],[\"meta\",{\"property\":\"og:url\",\"content\":\"https://jiangbyte.cn/tag/conda/\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"摸鱼猫泡泡\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"标签: Conda\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"website\"}],[\"meta\",{\"property\":\"og:image\",\"content\":\"/img/logo.jpg\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"zh-CN\"}],[\"link\",{\"rel\":\"canonical\",\"href\":\"https://jiangbyte.cn/tag/conda/\"}]]},\"git\":{},\"readingTime\":{\"minutes\":0,\"words\":0},\"filePathRelative\":null,\"excerpt\":\"\"}")
+export default { name: "index.html.vue" }
+</script>
