@@ -245,7 +245,7 @@ function copyAssetsBesidePosts() {
 
   for (const assetsDir of findAssetDirs(SRC_DOCS)) {
     const parentRel = relFromDocs(path.dirname(assetsDir)).replace(/\\/g, '/') + '/';
-    if (parentRel.startsWith('bubble/')) continue;
+    if (parentRel.startsWith('bubble/') || parentRel.startsWith('claire/')) continue;
 
     const matched = matchRoute(parentRel + 'dummy.md');
     if (!matched || !parentRel.startsWith(matched.prefix)) {
@@ -322,33 +322,42 @@ ${siteBody.trim()}
   console.log('page: about.md');
 }
 
-function writeBubblePage() {
+function writeClairePage() {
+  // 源站栏目仍叫 bubble；迁入后统一为 claire
   const src = path.join(SRC_DOCS, 'bubble/README.md');
   const parsed = matter(fs.readFileSync(src, 'utf8'));
   let body = convertBody(parsed.content);
-  // 资源改到 /img/bubble/
-  body = body.replace(/\.\/assets\//g, '/img/bubble/');
+  // 资源改到 /img/claire/
+  body = body.replace(/\.\/assets\//g, '/img/claire/');
+  body = body.replace(/bubble-turnaround-/g, 'claire-turnaround-');
   // 去掉 hope 定制 class 包装，保留图片
   body = body.replace(/<div class="jb-mascot">\s*/g, '').replace(/<\/div>\s*/g, '');
 
   const content = `---
 layout: ../layouts/PageLayout.astro
-title: "泡泡"
-coverTitle: "泡泡"
-description: "${String(parsed.data.description || '站点拟人形象泡泡').replace(/"/g, '\\"')}"
+title: "Claire"
+coverTitle: "Claire"
+description: "${String(parsed.data.description || '站点拟人形象 Claire（泡泡）').replace(/"/g, '\\"')}"
 comments: false
 ---
 
 ${body.trim()}
 `;
-  fs.writeFileSync(path.join(PAGES_DIR, 'bubble.md'), content);
+  fs.writeFileSync(path.join(PAGES_DIR, 'claire.md'), content);
 
   const assetsSrc = path.join(SRC_DOCS, 'bubble/assets');
   if (fs.existsSync(assetsSrc)) {
-    copyDir(assetsSrc, path.join(PUBLIC_IMG, 'bubble'));
+    const dest = path.join(PUBLIC_IMG, 'claire');
+    copyDir(assetsSrc, dest);
+    // 文件名统一 claire-turnaround-*
+    for (const name of fs.readdirSync(dest)) {
+      if (name.startsWith('bubble-turnaround-')) {
+        fs.renameSync(path.join(dest, name), path.join(dest, name.replace('bubble-turnaround-', 'claire-turnaround-')));
+      }
+    }
   }
   stats.pages++;
-  console.log('page: bubble.md');
+  console.log('page: claire.md');
 }
 
 function writeTimelinePage() {
@@ -447,7 +456,7 @@ function main() {
 
   copyAssetsBesidePosts();
   writeAboutPage();
-  writeBubblePage();
+  writeClairePage();
   writeTimelinePage();
 
   console.log('\nDone:', stats);

@@ -62,7 +62,7 @@ categoryMap:
   数据库: database
   软考: soft-exam
   职场: career
-  泡泡: bubble
+  Claire: claire
   笔记: note
   Java: java
   MySQL: mysql
@@ -542,8 +542,8 @@ navigation:
       - name: 站点时间线
         path: /site-timeline
         icon: ri:timeline-view
-  - name: 泡泡
-    path: /bubble
+  - name: Claire
+    path: /claire
     icon: ri:bear-smile-line
   - name: 关于
     nameKey: nav.about

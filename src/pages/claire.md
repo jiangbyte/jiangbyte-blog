@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/PageLayout.astro
-title: "泡泡"
-coverTitle: "泡泡"
+title: "Claire"
+coverTitle: "Claire"
 description: "三花猫耳「泡泡」（Claire）的设计图与三视图。"
 comments: false
 ---
@@ -11,9 +11,9 @@ comments: false
 
 默认造型与场景如下。
 
-![泡泡 · 元气](/img/bubble/mascot-chibi.jpg)
+![泡泡 · 元气](/img/claire/mascot-chibi.jpg)
 
-![泡泡 · 雪宫与龙](/img/bubble/mascot-pose.jpg)
+![泡泡 · 雪宫与龙](/img/claire/mascot-pose.jpg)
 
 ## 设计图
 
@@ -21,19 +21,19 @@ comments: false
 
 正面 / 侧面 / 背面，以及眼睛、耳朵、手链、包、尾巴等细节。
 
-![泡泡 Q 版设定图](/img/bubble/bubble-turnaround-chibi.jpg)
+![泡泡 Q 版设定图](/img/claire/claire-turnaround-chibi.jpg)
 
 ### 美型设定
 
 全身立绘与面部、毛发、尾巴、服装细节。
 
-![泡泡美型设定图](/img/bubble/bubble-turnaround-normal.jpg)
+![泡泡美型设定图](/img/claire/claire-turnaround-normal.jpg)
 
 ### 仙侠造型
 
 正面 / 侧面 / 背面，以及面部、发丝、尾巴、服饰细节。
 
-![泡泡仙侠造型设定图](/img/bubble/bubble-turnaround-xianxia.jpg)
+![泡泡仙侠造型设定图](/img/claire/claire-turnaround-xianxia.jpg)
 
 ## 生成说明
 

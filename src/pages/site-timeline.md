@@ -10,9 +10,9 @@ comments: false
 
 站点主题从 VuePress Theme Hope 迁移到 astro-koharu；旧站归档于 archive/vuepress 分支。
 
-### 2026-10-29 · 泡泡人设上线
+### 2026-10-29 · Claire（泡泡）人设上线
 
-新增泡泡栏目与三视图。
+新增 Claire 栏目与三视图（页面路径现为 `/claire`）。
 
 ### 2026-10-28 · 文档骨架成型
 
