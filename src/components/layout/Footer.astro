@@ -1,7 +1,7 @@
 ---
 import FooterAnnouncementEntry from '@components/announcement/FooterAnnouncementEntry';
 import { MAX_WIDTH } from '@constants/layout';
-import { icpConfig, siteConfig, umamiSiteStatsConfig } from '@constants/site-config';
+import { icpConfig, policeConfig, siteConfig, umamiSiteStatsConfig } from '@constants/site-config';
 import { getSiteStats } from '@lib/stats';
 import { cn } from '@lib/utils';
 import { Icon } from 'astro-icon/components';
@@ -62,59 +62,74 @@ const startYear = siteConfig?.startYear ?? currentYear;
 
     </div>
 
-    <!-- Copyright -->
-    <div class="text-muted-foreground flex items-center gap-0.5 text-sm">
-      <span class="opacity-75">©</span>
-      <span class="font-medium opacity-75">{startYear}</span>
-      {
-        startYear !== currentYear && (
-          <>
-            <span class="opacity-50">-</span>
-            <span class="font-medium opacity-75" itemprop="copyrightYear">
-              {currentYear}
-            </span>
-          </>
-        )
-      }
-      <SakuraSVG className="mx-1 size-5 animate-spin text-[#FFC0CB] duration-10000" />
-      <span class="author font-medium opacity-75" itemprop="copyrightHolder">
-        {siteConfig.name}
-        {siteConfig?.alternate ? `@${siteConfig.alternate}` : ''}
-      </span>
-    </div>
+    <!-- 英文正式版权 + 备案 + 主题致谢 -->
+    <div class="text-muted-foreground flex max-w-3xl flex-col items-center gap-2 text-center text-xs leading-relaxed sm:text-sm">
+      <p class="flex flex-wrap items-center justify-center gap-x-1 opacity-80" itemprop="copyrightHolder">
+        <span>©</span>
+        <span class="font-medium">{startYear}{startYear !== currentYear ? `-${currentYear}` : ''}</span>
+        <SakuraSVG className="mx-0.5 size-4 animate-spin text-[#9ec8ef] duration-10000" />
+        <span class="font-medium">{siteConfig.name}</span>
+        <span>. All rights reserved.</span>
+      </p>
 
-    <!-- ICP Filing -->
-    {icpConfig && (
-      <div class="text-muted-foreground/80 text-xs">
-        {icpConfig.link ? (
-          <a href={icpConfig.link} target="_blank" rel="noopener noreferrer" class="footer-link font-medium">
-            {icpConfig.text}
-          </a>
-        ) : (
-          <span class="opacity-75">{icpConfig.text}</span>
-        )}
-      </div>
-    )}
+      {(icpConfig || policeConfig) && (
+        <p class="text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 opacity-80">
+          {icpConfig && (
+            icpConfig.link ? (
+              <a href={icpConfig.link} target="_blank" rel="noopener noreferrer" class="footer-link font-medium">
+                {icpConfig.text}
+              </a>
+            ) : (
+              <span>{icpConfig.text}</span>
+            )
+          )}
+          {icpConfig && policeConfig && <span class="opacity-40" aria-hidden="true">|</span>}
+          {policeConfig && (
+            policeConfig.link ? (
+              <a
+                href={policeConfig.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="footer-link inline-flex items-center gap-1 font-medium"
+              >
+                {policeConfig.icon && (
+                  <img src={policeConfig.icon} alt="" width="14" height="14" class="inline-block" />
+                )}
+                {policeConfig.text}
+              </a>
+            ) : (
+              <span class="inline-flex items-center gap-1">
+                {policeConfig.icon && (
+                  <img src={policeConfig.icon} alt="" width="14" height="14" class="inline-block" />
+                )}
+                {policeConfig.text}
+              </span>
+            )
+          )}
+        </p>
+      )}
 
-    <!-- Powered By -->
-    <div class="text-muted-foreground/80 flex items-center gap-2 text-xs">
-      <span class="opacity-75">Powered by theme</span>
-      <a
-        href="https://github.com/cosZone/astro-koharu"
-        target="_blank"
-        class="footer-link font-medium transition-all duration-300"
-      >
-        astro-koharu
-      </a>
-      <span class="opacity-50">·</span>
-      <span class="opacity-75">Inspired by</span>
-      <a
-        href="https://github.com/amehime/hexo-theme-shoka"
-        target="_blank"
-        class="footer-link font-medium transition-all duration-300"
-      >
-        Shoka
-      </a>
+      <p class="text-muted-foreground/70 flex flex-wrap items-center justify-center gap-x-1.5 opacity-75">
+        <span>Powered by</span>
+        <a
+          href="https://github.com/cosZone/astro-koharu"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-link font-medium"
+        >
+          astro-koharu
+        </a>
+        <span class="opacity-40" aria-hidden="true">·</span>
+        <span>Inspired by</span>
+        <a
+          href="https://github.com/amehime/hexo-theme-shoka"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-link font-medium"
+        >
+          Shoka
+        </a>
+      </p>
     </div>
   </div>
 </footer>

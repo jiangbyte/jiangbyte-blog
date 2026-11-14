@@ -13,22 +13,22 @@ function TwikooSkeleton() {
     <div className="twikoo-skeleton animate-pulse space-y-4 px-4" aria-hidden="true">
       {/* Avatar + meta inputs row */}
       <div className="flex gap-3">
-        <div className="size-10 shrink-0 rounded-full bg-muted" />
+        <div className="size-10 shrink-0 rounded-full bg-placeholder" />
         <div className="flex flex-1 gap-2">
-          <div className="h-10 flex-1 rounded bg-muted" />
-          <div className="hidden h-10 flex-1 rounded bg-muted sm:block" />
-          <div className="hidden h-10 flex-1 rounded bg-muted sm:block" />
+          <div className="h-10 flex-1 rounded bg-placeholder" />
+          <div className="hidden h-10 flex-1 rounded bg-placeholder sm:block" />
+          <div className="hidden h-10 flex-1 rounded bg-placeholder sm:block" />
         </div>
       </div>
       {/* Textarea */}
-      <div className="h-[150px] rounded bg-muted" />
+      <div className="h-[150px] rounded bg-placeholder" />
       {/* Action row */}
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
-          <div className="size-6 rounded bg-muted" />
-          <div className="size-6 rounded bg-muted" />
+          <div className="size-6 rounded bg-placeholder" />
+          <div className="size-6 rounded bg-placeholder" />
         </div>
-        <div className="h-9 w-16 rounded bg-muted" />
+        <div className="h-9 w-16 rounded bg-placeholder" />
       </div>
     </div>
   );

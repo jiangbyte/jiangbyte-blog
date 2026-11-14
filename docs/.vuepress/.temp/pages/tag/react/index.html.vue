@@ -1,5 +1,0 @@
-<template><div></div></template>
-<script>
-export const _pageData = JSON.parse("{\"path\":\"/tag/react/\",\"title\":\"标签: React\",\"lang\":\"zh-CN\",\"frontmatter\":{\"dir\":{\"index\":false},\"index\":false,\"feed\":false,\"sitemap\":false,\"title\":\"标签: React\",\"blog\":{\"type\":\"category\",\"name\":\"React\",\"key\":\"tag\"},\"layout\":\"Blog\",\"head\":[[\"script\",{\"type\":\"application/ld+json\"},\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"WebPage\\\",\\\"name\\\":\\\"标签: React\\\"}\"],[\"meta\",{\"property\":\"og:url\",\"content\":\"https://jiangbyte.cn/tag/react/\"}],[\"meta\",{\"property\":\"og:site_name\",\"content\":\"摸鱼猫泡泡\"}],[\"meta\",{\"property\":\"og:title\",\"content\":\"标签: React\"}],[\"meta\",{\"property\":\"og:type\",\"content\":\"website\"}],[\"meta\",{\"property\":\"og:image\",\"content\":\"/img/logo.jpg\"}],[\"meta\",{\"property\":\"og:locale\",\"content\":\"zh-CN\"}],[\"link\",{\"rel\":\"canonical\",\"href\":\"https://jiangbyte.cn/tag/react/\"}]]},\"git\":{},\"readingTime\":{\"minutes\":0,\"words\":0},\"filePathRelative\":null,\"excerpt\":\"\"}")
-export default { name: "index.html.vue" }
-</script>

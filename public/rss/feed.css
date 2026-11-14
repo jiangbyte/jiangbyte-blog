@@ -1,5 +1,11 @@
 /* RSS Feed Style - Kawaii ACG Theme */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/outfit/outfit-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Colors */
@@ -42,7 +48,7 @@ html {
 }
 
 body {
-  font-family: 'Quicksand', '寒蝉全圆体', 'Chill Round', sans-serif;
+  font-family: 'Outfit', 'Noto Sans SC', '寒蝉全圆体', sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.5;

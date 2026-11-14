@@ -151,12 +151,12 @@ const DEBUG_CAT_STATE = false;
 
 <style>
   .cat-404-container {
-    /* Palette - soft pastel colors for light mode */
-    --c-stroke: #f5a0b8;
-    --c-head-bg: rgba(245, 160, 184, 0.1);
-    --c-ear-fill: rgba(245, 180, 160, 0.2);
-    --c-nose: #f5b0a0;
-    --c-features: #666;
+    /* Soft Ice：亮色也用冰蓝描边/填充，不再用樱粉 */
+    --c-stroke: #6ba8e0;
+    --c-head-bg: rgba(107, 168, 224, 0.12);
+    --c-ear-fill: rgba(158, 200, 239, 0.22);
+    --c-nose: #8ec4ec;
+    --c-features: #5a6b7a;
 
     --anim-dur: 6s;
 
@@ -165,15 +165,15 @@ const DEBUG_CAT_STATE = false;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: "寒蝉全圆体", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "寒蝉全圆体 Bold", "寒蝉全圆体", "Outfit", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
 
   :global(.dark) .cat-404-container {
-    --c-stroke: rgba(241, 139, 179, 0.7);
-    --c-head-bg: rgba(241, 139, 179, 0.1);
-    --c-ear-fill: rgba(240, 163, 135, 0.15);
-    --c-nose: rgba(240, 163, 135, 0.8);
+    --c-stroke: rgba(142, 196, 236, 0.7);
+    --c-head-bg: rgba(142, 196, 236, 0.1);
+    --c-ear-fill: rgba(158, 200, 239, 0.15);
+    --c-nose: rgba(158, 200, 239, 0.8);
     --c-features: #bbb;
   }
 
@@ -354,16 +354,10 @@ const DEBUG_CAT_STATE = false;
   }
 
   .fade-text {
-    color: #999;
+    color: hsl(var(--muted-foreground));
     font-size: 1.25rem;
     font-weight: 500;
     text-align: center;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .fade-text {
-      color: #aaa;
-    }
   }
   
   .actions {
@@ -387,48 +381,26 @@ const DEBUG_CAT_STATE = false;
   }
 
   .home-btn {
-    background: linear-gradient(135deg, #ed6ea0 0%, #ec8c69 100%);
-    color: white;
-    box-shadow: 0 2px 8px rgba(237, 110, 160, 0.25);
+    background-image: var(--gradient-shoka-button);
+    color: #fff;
+    box-shadow: 0 2px 8px rgb(107 168 224 / 0.28);
   }
 
   .home-btn:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 20px rgba(237, 110, 160, 0.35);
+    box-shadow: 0 6px 20px rgb(107 168 224 / 0.4);
   }
 
   .archive-btn {
-    background: linear-gradient(135deg, rgba(237, 110, 160, 0.06) 0%, rgba(236, 140, 105, 0.06) 100%);
-    color: #ed6ea0;
-    border: 2px solid rgba(237, 110, 160, 0.25);
+    background: hsl(var(--primary) / 0.06);
+    color: hsl(var(--primary));
+    border: 2px solid hsl(var(--primary) / 0.28);
   }
 
   .archive-btn:hover {
-    background: linear-gradient(135deg, rgba(237, 110, 160, 0.12) 0%, rgba(236, 140, 105, 0.12) 100%);
-    border-color: rgba(237, 110, 160, 0.4);
+    background: hsl(var(--primary) / 0.12);
+    border-color: hsl(var(--primary) / 0.45);
     transform: translateY(-2px) scale(1.02);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .home-btn {
-      background: linear-gradient(135deg, rgba(241, 139, 179, 0.9) 0%, rgba(240, 163, 135, 0.9) 100%);
-      box-shadow: 0 2px 8px rgba(241, 139, 179, 0.3);
-    }
-
-    .home-btn:hover {
-      box-shadow: 0 6px 20px rgba(241, 139, 179, 0.4);
-    }
-
-    .archive-btn {
-      background: linear-gradient(135deg, rgba(241, 139, 179, 0.08) 0%, rgba(240, 163, 135, 0.08) 100%);
-      color: #f18bb3;
-      border-color: rgba(241, 139, 179, 0.3);
-    }
-
-    .archive-btn:hover {
-      background: linear-gradient(135deg, rgba(241, 139, 179, 0.18) 0%, rgba(240, 163, 135, 0.18) 100%);
-      border-color: rgba(241, 139, 179, 0.5);
-    }
   }
 
 /* Browser support for d: path() animation is generally good in modern browsers (Chrome/Safari/Firefox). */

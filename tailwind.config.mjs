@@ -124,8 +124,9 @@ export default {
         '5.5xl': '3.5rem',
       },
       fontFamily: {
-        sans: ['寒蝉全圆体', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        'chill-round': ['寒蝉全圆体', 'sans-serif'],
+        /* 软冰：Outfit 拉丁 + 系统/思源黑体中文；圆体留给标题与 Logo */
+        sans: ['Outfit', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'sans-serif'],
+        'chill-round': ['寒蝉全圆体 Bold', '寒蝉全圆体', 'Outfit', 'sans-serif'],
       },
       clipPath: {
         'post-img-left': 'polygon(0 0,92% 0%,100% 100%,0% 100%)',

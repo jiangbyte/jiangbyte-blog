@@ -5,7 +5,7 @@ import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { ScrollableRow } from '@components/ui/ScrollableRow';
 import { Routes } from '@constants/router';
-import { createArticleStatsConfig, defaultCoverList } from '@constants/site-config';
+import { coversConfig, createArticleStatsConfig, defaultCoverList } from '@constants/site-config';
 import { buildCategoryPath, buildTagPath, getCategoryArr, translateCategoryName } from '@lib/content';
 import { displayDate } from '@lib/date';
 import { getLqipProps } from '@lib/lqip';
@@ -30,8 +30,11 @@ const { cover, date, categories, title, draft, description, slug, link, tags, wo
   data ?? {};
 
 const locale = getLocaleFromUrl(Astro.url.pathname);
+const hasOwnCover = Boolean(cover);
+const useApiCover = !hasOwnCover && coversConfig.post.mode === 'api';
 const finalCover = cover ?? randomCover ?? defaultCoverList[0];
 const href = localizedPath(routeBuilder(Routes.Post, { slug, link, title }), locale);
+const lqipSource = useApiCover ? '' : finalCover;
 const isDraft = import.meta.env.DEV && draft === true;
 const isFallback = postLocale != null && locale !== defaultLocale && postLocale !== locale;
 
@@ -42,8 +45,8 @@ const categoryStr = categoryArr?.length ? translateCategoryName(categoryArr[cate
 // 直接使用 description（已在 PostCardData 中计算好）
 const postDescription = description ?? '';
 
-// 获取 LQIP 样式用于图片占位符
-const lqipProps = getLqipProps(finalCover);
+// API 封面只用冰蓝 LQIP，不预铺本地图
+const lqipProps = useApiCover ? getLqipProps('') : getLqipProps(lqipSource || finalCover || '');
 
 // Stagger padding amounts for uniform position mode (following diagonal edge)
 // Only applied when images are on left, where the diagonal faces the content
@@ -79,10 +82,32 @@ const titleMorph = postTitleMorphName(slug);
       'post-item-cover md:clip-path-none relative h-46.5 max-h-46.5 w-[calc(50%-2rem)] overflow-hidden md:w-auto',
       leftClip ? 'rounded-s-lg clip-path-post-img-left order-1' : 'rounded-e-lg clip-path-post-img-right order-2',
       'md:clip-path-none md:order-0',
+      useApiCover && 'cover-api-frame is-loading',
       lqipProps.class,
     )}
+    data-cover-frame={useApiCover ? '' : undefined}
   >
-    <ResponsiveImage src={finalCover} maxWidth={800} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 992px) 40vw, 400px" loading="lazy" decoding="async" alt="" class="h-full w-full cursor-pointer object-cover" />
+    {useApiCover ? (
+      <img
+        data-cover-slot="post"
+        data-cover-seed={slug}
+        alt=""
+        class="h-full w-full cursor-pointer object-cover"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 992px) 40vw, 400px"
+      />
+    ) : finalCover ? (
+      <ResponsiveImage
+        src={finalCover}
+        maxWidth={800}
+        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 992px) 40vw, 400px"
+        loading="lazy"
+        decoding="async"
+        alt=""
+        class="h-full w-full cursor-pointer object-cover"
+      />
+    ) : null}
   </a>
   <div
     class={cn(
@@ -268,13 +293,13 @@ const titleMorph = postTitleMorphName(slug);
     .post-item-card:hover {
       transform: translateY(-0.25rem);
       box-shadow:
-        0 1.25rem 2.5rem -1.25rem rgb(233 84 107 / 0.4),
+        0 1.25rem 2.5rem -1.25rem rgb(107 168 224 / 0.4),
         0 0.5rem 1.25rem -0.75rem rgb(90 97 105 / 0.22);
     }
 
     :global(.dark) .post-item-card:hover {
       box-shadow:
-        0 1.25rem 2.75rem -1.25rem rgb(240 123 145 / 0.32),
+        0 1.25rem 2.75rem -1.25rem rgb(107 168 224 / 0.28),
         0 0.5rem 1.5rem -0.75rem rgb(0 0 0 / 0.5);
     }
 
@@ -284,7 +309,7 @@ const titleMorph = postTitleMorphName(slug);
     }
 
     .post-item-card:hover .post-item-more {
-      box-shadow: 0 0.4rem 1.1rem -0.3rem rgb(233 84 107 / 0.6);
+      box-shadow: 0 0.4rem 1.1rem -0.3rem rgb(107 168 224 / 0.6);
     }
   }
 

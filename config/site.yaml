@@ -11,146 +11,119 @@
 # Site Basic Information
 # =============================================================================
 site:
-  title: 余弦の博客 # 网站名称
-  alternate: cosine # 网站英文名称 用于页脚、Logo、@ handle 等
-  subtitle: WA 的一声就哭了 # 网站副标题
-  name: cos # 作者名称 - 请修改为你的名字
-  description: 一个基于 Astro 的现代化博客主题 # 网站描述
-  avatar: /img/avatar.webp # 网站头像
-  showLogo: false # 是否显示图形 Logo；默认显示站点名称，启用后可替换 src/assets/svg/logo.svg
-  author: Author # 作者名称 - 请修改为你的名字
-  url: https://koharu.cosine.ren # 站点 URL 用于 RSS 和 SEO
-  defaultOgImage: /img/avatar.webp # 默认 Open Graph 图片
-  startYear: 2024 # 建站年份
-  timezone: Asia/Shanghai # 时区配置 (IANA 格式)，用于日期显示和处理
-  keywords: # SEO 关键词 (全局)
-    - 博客
-    - Astro
-    - 技术
-    - 前端
-    # 请根据你的网站内容添加关键词
-  # breadcrumbHome: 首页  # 面包屑导航中首页的显示名称（默认: '首页'）
-  # icp:                         # ICP 备案号（可自定义链接）
-  #   text: "粤ICP备xxxxxxxxxx号"
-  #   link: "https://beian.miit.gov.cn/"
-  # Enable slug transliteration (converts CJK characters to pinyin/romaji)
-  # Note: enabling this will break existing CJK URLs. Run `pnpm save-slugs` first to save old slugs into frontmatter.link
-  # enableSlugTransliteration: true
+  title: 摸鱼猫泡泡
+  # alternate = 首页封面第二行 / SEO 副名；页头 Logo 用 title
+  alternate: Charlie's Blog
+  subtitle: 记录工具与工程实践
+  name: Charlie
+  description: 全栈 / 嵌入式 / ACG / INFJ
+  avatar: /img/avatar.webp
+  showLogo: false
+  author: Charlie
+  url: https://jiangbyte.cn/
+  defaultOgImage: /img/avatar.webp
+  startYear: 2026
+  timezone: Asia/Shanghai
+  keywords:
+    - 摸鱼猫泡泡
+    - Charlie
+    - Charlie's Blog
+    - 工具
+    - 工程实践
+    - 嵌入式
+  icp:
+    text: "黔ICP备2026018565号-1"
+    link: "https://beian.miit.gov.cn/"
+  police:
+    text: "贵公网安备52260102556648号"
+    link: "https://beian.mps.gov.cn/#/query/webSearch?code=52260102556648"
+    icon: "/img/beian.png"
 
 # =============================================================================
 # Internationalization (i18n)
-# 国际化配置 - 控制多语言支持
 # =============================================================================
-# defaultLocale: 默认语言代码（URL 不带前缀）
-# locales: 支持的语言列表
-#   - code: 语言代码（BCP 47 短格式，如 'zh', 'en', 'ja'）
-#   - label: 语言显示名称（如 '中文', 'English'）
-# -----------------------------------------------------------------------------
 i18n:
   defaultLocale: zh
   locales:
     - code: zh
       label: 中文
-    - code: en
-      label: English
-      # enabled: false  # 内容存在但暂时禁用（保留内容但不生成路由）
-    - code: ja
-      label: 日本語
-    - code: ko
-      label: 한국어
 
 # =============================================================================
 # Category Map
-# Maps Chinese category names to URL-friendly English slugs
-# Example: '随笔' category URL becomes /categories/life
 # =============================================================================
 categoryMap:
-  # Primary categories
-  随笔: life
-  笔记: note
   工具: tools
-  周刊: weekly
-  # Secondary categories (for nested paths)
-  前端: front-end
-  CSS: css
-  番剧: anime
-  # Add more as needed:
-  # 书摘: reading
-  # 后端: back-end
-  # 算法: algorithm
-  # 项目: project
+  运维: ops
+  实践: practice
+  嵌入式: embedded
+  LeetCode: leetcode
+  项目: project
+  源码阅读: source-reading
+  数据库: database
+  软考: soft-exam
+  职场: career
+  泡泡: bubble
+  笔记: note
+  Java: java
+  MySQL: mysql
+  Redis: redis
+  高级架构师: advanced-architect
 
 # =============================================================================
 # Featured Categories (Homepage)
-# 首页精选分类 - 在首页以卡片形式展示的分类入口
 # =============================================================================
-# 字段说明：
-#   link: 分类链接路径，对应 categoryMap 中的英文 slug
-#   label: 卡片上显示的分类名称
-#   image: 封面图片路径（相对于 public 目录）
-#   description: 分类描述文字，显示在卡片上
-# -----------------------------------------------------------------------------
 featuredCategories:
-  - link: life # 对应 categoryMap 中 随笔: life
-    label: 随笔
-    image: /img/cover/2.webp
-    description: 生活记录、随想随笔
-  - link: note # 对应 categoryMap 中 笔记: note
-    label: 笔记
-    image: /img/cover/4.webp
-    description: 技术笔记、学习笔记
-  - link: note/front-end # 嵌套分类：笔记/前端
-    label: 前端
-    image: /img/cover/1.webp
-    description: 前端技术相关
-  - link: tools # 对应 categoryMap 中 工具: tools
+  - link: tools
     label: 工具
     image: /img/cover/11.webp
-    description: 工具使用、效率提升
+    description: Git、Agent、环境与编辑器
+  - link: ops
+    label: 运维
+    image: /img/cover/8.webp
+    description: Debian、Docker、Nginx 与部署
+  - link: project
+    label: 项目集
+    image: /img/cover/1.webp
+    description: 开源与个人项目介绍
+  - link: soft-exam
+    label: 软考
+    image: /img/cover/10.webp
+    description: 高级架构师笔记
 
 # =============================================================================
 # Featured Series
-# 精选系列功能 - 用于展示定期更新的系列内容（支持多个系列）
 # =============================================================================
-# 字段说明：
-#   slug: URL 路径（必填），如 'weekly' 对应 /weekly 路径
-#         注意：不能与保留路由冲突，包括：about, categories, tags, friends, posts, archives, api, _astro, rss.xml, sitemap.xml, robots.txt, favicon.ico 等
-#   categoryName: 对应的分类名称（必填，需在 categoryMap 中存在）
-#   label: 侧边栏/导航中显示的简短名称（可选）
-#   fullName: 系列页面标题显示的完整名称（可选）
-#   description: 系列介绍文字，支持多行 Markdown（可选）
-#   cover: 系列页面头图路径，相对于 public 目录（可选）
-#   enabled: 是否启用此系列，设为 false 可关闭（可选，默认 true）
-#   icon: 导航图标，Iconify 格式如 'ri:newspaper-line'（可选）
-#   highlightOnHome: 是否在首页高亮显示最新文章（可选，默认 true，显式设为 false 可禁用）
-#   links: 相关链接配置（可选）
-# -----------------------------------------------------------------------------
 featuredSeries:
-  - slug: weekly # URL 路径: /weekly
-    categoryName: 周刊 # 必须与 categoryMap 中的分类名匹配
-    label: 我的周刊 # 简短名称
-    fullName: 我的技术周刊 # 完整名称
-    description: | # 支持多行 Markdown
-      这是周刊/系列文章功能的示例配置。
-      你可以用它来发布定期更新的系列内容，如技术周刊、读书笔记系列等。
-      设置 enabled: false 可以关闭此功能。
-    cover: /img/weekly_header.webp # 系列页面头图
-    enabled: true # 启用此系列
-    icon: ri:newspaper-line # 导航图标
-    links: # 相关链接（可选）
-      github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
-      rss: /rss.xml # (可选) RSS 订阅链接
-      # chrome: https://chromewebstore.google.com/detail/your-extension-id # (可选) 浏览器插件
-      # docs: https://your-docs-url # (可选) 文档链接
-  # 示例：添加第二个系列（取消注释启用）
-  # - slug: reading # URL 路径: /reading
-  #   categoryName: 书摘
-  #   label: 读书笔记
-  #   fullName: 我的读书笔记
-  #   description: 阅读记录与读后感
-  #   cover: /img/weekly_header.webp # 记得添加，我这里就是个示例
-  #   enabled: true
-  #   icon: ri:book-read-line
+  - slug: projects
+    categoryName: 项目
+    label: 项目集
+    fullName: 项目集
+    description: |
+      开源与个人项目介绍：定位、能力与技术栈。
+    cover: /img/cover/1.webp
+    enabled: true
+    icon: ri:apps-2-line
+    highlightOnHome: false
+  - slug: soft-exam
+    categoryName: 软考
+    label: 软考
+    fullName: 软考 · 高级架构师
+    description: |
+      系统架构设计师相关笔记与章节整理。
+    cover: /img/cover/10.webp
+    enabled: true
+    icon: ri:book-read-line
+    highlightOnHome: false
+  - slug: source-reading
+    categoryName: 源码阅读
+    label: 源码
+    fullName: 源码阅读
+    description: |
+      JDK 等源码阅读笔记。
+    cover: /img/cover/12.webp
+    enabled: true
+    icon: ri:code-s-slash-line
+    highlightOnHome: false
 
 # =============================================================================
 # Social Links
@@ -166,15 +139,11 @@ featuredSeries:
 # -----------------------------------------------------------------------------
 social:
   github:
-    url: https://github.com/your-username # 替换为你的 GitHub 链接
-    icon: ri:github-fill # Remix Icon 的 GitHub 图标
-    color: '#191717' # (可选) 图标颜色
-  email:
-    url: mailto:your@email.com # 替换为你的邮箱，需加 mailto: 前缀
-    icon: ri:mail-line
-    color: '#55acd5'
+    url: https://github.com/jiangbyte
+    icon: ri:github-fill
+    color: '#191717'
   rss:
-    url: /rss.xml # 站内 RSS 订阅地址
+    url: /rss.xml
     icon: ri:rss-line
     color: '#ff6600'
   # -------------------------------------------------------------------------
@@ -243,63 +212,7 @@ friends:
         desc: 站点简介 # 站点简介
         image: https://your-blog.com/avatar.jpg # 头像链接
         color: "#ffc0cb" # 主题色（可选）
-  data: # 友链列表；同组内按这里的顺序展示
-    - site: 余弦の博客
-      url: https://blog.cosine.ren
-      owner: cos
-      desc: FE / ACG / 手工 / 深色模式强迫症 / INFP / 兴趣广泛养两只猫的老宅女 / remote
-      image: https://blog.cosine.ren/img/avatar.webp
-      color: '#ed788b'
-      group: familiar
-    - site: 示例博客 A
-      url: https://example-a.com
-      owner: Alice
-      desc: 一个热爱技术的开发者
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Alice
-      color: '#BEDCFF'
-      group: familiar
-    - site: 示例博客 B
-      url: https://example-b.com
-      owner: Bob
-      desc: 分享生活与技术的小站
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Bob
-      color: '#FBC1CC'
-      group: community
-    - site: 示例博客 C
-      url: https://example-c.com
-      owner: Carol
-      desc: 记录学习与成长的地方
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Carol
-      color: '#ABDCFF'
-      group: community
-    - site: 示例博客 D
-      url: https://example-d.com
-      owner: Dave
-      desc: 喜欢折腾键盘和终端
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Dave
-      color: '#C8E6C9'
-      group: community
-    - site: 示例博客 E
-      url: https://example-e.com
-      owner: Eve
-      desc: 设计、插画与日常碎碎念
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Eve
-      color: '#E1BEE7'
-      group: following
-    - site: 示例博客 F
-      url: https://example-f.com
-      owner: Frank
-      desc: 长文写作与阅读笔记
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Frank
-      color: '#FFE0B2'
-      group: following
-    # 不写 group（或写了不存在的分组 id）的友链会归入最后的「未分组」
-    - site: 示例博客 G
-      url: https://example-g.com
-      owner: Grace
-      desc: 还没想好放在哪一组的新朋友
-      image: https://api.dicebear.com/7.x/avataaars/svg?seed=Grace
-      color: '#B2EBF2'
+  data: []
 
 # =============================================================================
 # Announcements
@@ -352,13 +265,37 @@ announcements:
 
 
 # =============================================================================
-# Default Cover List
-# 默认封面列表 - 文章没有指定封面时将随机从列表中选择一张作为封面
-# 不设置则使用内置的 21 张默认封面 (/img/cover/1~21.webp)
+# Covers（页面头图 + 文章默认封面）
 # =============================================================================
-# defaultCoverList:
-#   - /img/cover/1.webp
-#   - https://example.com/custom-cover.webp
+# mode:
+#   api   — 按 providers 顺序拉随机图（默认）；失败回退本地
+#   local — 只用本地图，不请求外网
+# providers（按顺序尝试；须预检成功才展示，失败自动下一个 / 本地池）:
+#   kind: image — 直链跳转图（推荐）
+#   kind: json  — fetch JSON + pick 点路径（需 CORS）
+#   url 可写 {seed}（按文章 slug 区分，避免缓存成同一张）
+# 图源只写在本配置，代码不内置第三方 API
+# 当前图源（按序）：小小API → 梓晨 ACG
+# -----------------------------------------------------------------------------
+covers:
+  hero:
+    mode: api
+    sessionSticky: true
+    providers:
+      - kind: image
+        url: https://v2.xxapi.cn/api/randomAcgPic?type=pc&return=302
+      - kind: image
+        url: https://app.zichen.zone/api/acg/api.php
+  post:
+    mode: api
+    sessionSticky: true
+    # 无本地兜底：失败只留 LQIP 占位
+    providers:
+      - kind: image
+        url: https://v2.xxapi.cn/api/randomAcgPic?type=pc&return=302&_s={seed}
+      - kind: image
+        url: https://app.zichen.zone/api/acg/api.php?_s={seed}
+
 
 
 # =============================================================================
@@ -573,23 +510,23 @@ postActions:
 #   - Remix Icon: https://icon-sets.iconify.design/ri/
 # -----------------------------------------------------------------------------
 navigation:
-  - name: 首页 # 菜单显示名称（nameKey 不存在时的回退文本）
-    nameKey: nav.home # i18n 翻译 key
-    path: / # 链接路径
-    icon: ri:home-heart-fill # 图标
-  # - name: 书摘
-  #   path: /reading
-  - name: 周刊
-    nameKey: nav.weekly
-    path: /weekly
-    icon: ri:newspaper-line
-  # Optional explicit Moments position. When omitted, enabled Moments is inserted after Archives.
-  # - feature: moments
-  #   icon: ri:chat-smile-3-fill
-  - name: 文章 # 有子菜单时，path 可省略
+  - name: 首页
+    nameKey: nav.home
+    path: /
+    icon: ri:home-heart-fill
+  - name: 项目集
+    path: /projects
+    icon: ri:apps-2-line
+  - name: 软考
+    path: /soft-exam
+    icon: ri:book-read-line
+  - name: 源码
+    path: /source-reading
+    icon: ri:code-s-slash-line
+  - name: 文章
     nameKey: nav.posts
     icon: ri:quill-pen-ai-fill
-    children: # 子菜单列表
+    children:
       - name: 分类
         nameKey: nav.categories
         path: /categories
@@ -602,22 +539,16 @@ navigation:
         nameKey: nav.archives
         path: /archives
         icon: ri:archive-2-fill
-  - name: 友链
-    nameKey: nav.friends
-    path: /friends
-    icon: ri:links-line
+      - name: 站点时间线
+        path: /site-timeline
+        icon: ri:timeline-view
+  - name: 泡泡
+    path: /bubble
+    icon: ri:bear-smile-line
   - name: 关于
     nameKey: nav.about
     path: /about
     icon: fa6-regular:circle-user
-  - name: 歌单
-    nameKey: nav.music
-    path: /music
-    icon: ri:music-2-fill
-  - name: 写作室
-    path: /editor
-    localeIndependent: true
-    icon: ri:edit-box-line
 
 # =============================================================================
 # Christmas/Seasonal Features
@@ -774,13 +705,9 @@ comment:
 # -----------------------------------------------------------------------------
 analytics:
   umami:
-    enabled: true
+    enabled: false
     id: your-umami-id
     endpoint: https://stats.example.com
-    # statistics_display:
-    #   token: your-umami-share-token
-    #   article_page_views: true
-    #   footer_site_stats: true
 
 # =============================================================================
 # SEO Configuration
@@ -806,74 +733,25 @@ seo:
 # Christmas/Seasonal Features
 # =============================================================================
 bgm:
-  enabled: true  # (有 audio 时自动启用，显式 false 可禁用)
-  # metingApi: https://163.hyc.moe/  # Meting API 地址，默认为 https://163.hyc.moe/，推荐自部署
-  audio:
-    - title: 最爱山山
-      list:
-        - https://music.163.com/playlist?id=8676645748
-    - title: Love Vocaloid
-      list:
-        - https://music.163.com/playlist?id=8882890045
+  enabled: false
+  audio: []
 
 christmas:
-  enabled: false # 总开关
-  # features: # 各功能独立开关
-  #   snowfall: true # 飘雪效果
-  #   christmasColorScheme: true # 圣诞配色
-  #   christmasCoverDecoration: true # 封面装饰
-  #   christmasHat: true # 头像圣诞帽
-  #   readingTimeSnow: true # 阅读时间雪花图标
-  # snowfall: # 飘雪参数配置
-  #   speed: 0.5 # 下落速度 (0-1)
-  #   intensity: 0.7 # 雪花密度 (0-1)
-  #   mobileIntensity: 0.4 # 移动端密度（建议较低）
-  #   maxLayers: 6 # 最大层数
-  #   maxIterations: 8 # 最大迭代次数
-  #   mobileMaxLayers: 4 # 移动端最大层数
-  #   mobileMaxIterations: 6 # 移动端最大迭代次数
+  enabled: false
 
-# =============================================================================
-# Bangumi (Media Tracking)
-# 追番页面 - 注释掉整个 bangumi 段即可关闭（页面 + 导航自动隐藏）
-# =============================================================================
-# 字段说明：
-#   userId: Bangumi 用户名或数字 ID（必填）
-#   label: 导航显示名称（可选，默认：追番）
-#   icon: 导航图标，Iconify 格式（可选，默认：ri:bilibili-fill）
-# -----------------------------------------------------------------------------
-bangumi:
-  userId: cosine
-  # label: 追番
-  # icon: ri:bilibili-fill
+# Bangumi 关闭：不配置 userId
+# bangumi:
+#   userId: 
 
-# =============================================================================
-# Development Tools (Dev Only)
-# 开发工具配置 - 仅在开发环境（pnpm dev）生效
-# =============================================================================
-# 配置后，开发环境下文章页会显示编辑按钮，可快速打开本地编辑器
-# 字段说明：
-#   localProjectPath: 本地项目的绝对路径（用于生成文件完整路径）
-#   contentRelativePath: 博客内容相对于项目根目录的路径（默认: 'src/content/blog'）
-#   editors: 编辑器列表
-#     - id: 编辑器唯一标识符
-#     - name: 编辑器显示名称
-#     - icon: Iconify 图标标识（可从 https://icon-sets.iconify.design/ 中搜寻）
-#     - urlTemplate: URL 模板，支持占位符 {path}（文件绝对路径）
-# -----------------------------------------------------------------------------
 dev:
-  localProjectPath: '/Users/yourname/path/to/astro-koharu' # 请修改为你的项目绝对路径
+  localProjectPath: '/home/jiang/workspace/projects/mine/code-guide'
   contentRelativePath: 'src/content/blog'
   editors:
-    - id: vscode
-      name: VS Code
-      icon: devicon-plain:vscode
-      urlTemplate: 'vscode://file/{path}'
     - id: cursor
       name: Cursor
       icon: simple-icons:cursor
       urlTemplate: 'cursor://file/{path}'
-    - id: zed
-      name: Zed
-      icon: simple-icons:zedindustries
-      urlTemplate: 'zed://file/{path}'
+    - id: vscode
+      name: VS Code
+      icon: devicon-plain:vscode
+      urlTemplate: 'vscode://file/{path}'

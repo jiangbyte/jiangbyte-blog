@@ -1,7 +1,7 @@
 ---
 import ColophonMeta from '@components/post/colophon/ColophonMeta.astro';
 import { Routes } from '@constants/router';
-import { createArticleStatsConfig, motionConfig, siteConfig } from '@constants/site-config';
+import { coversConfig, createArticleStatsConfig, motionConfig, siteConfig } from '@constants/site-config';
 import { colophonItemsAt } from '@lib/content/colophon';
 import { getPostSlug } from '@lib/content/locale';
 import { getPostColophon } from '@lib/content/post-colophon';
@@ -34,8 +34,10 @@ const { date, updated, title: dataTitle, draft } = data?.data ?? {};
 const readState = data ? getPostReadingTime(data) : null;
 const isDraft = import.meta.env.DEV && draft === true;
 
-// 获取横幅图片的 LQIP 样式
-const bannerLqipStyle = compact ? undefined : getLqipStyle('/img/site_header_1920.webp');
+const heroFallback = coversConfig.hero.fallback;
+const heroUsesApi = !compact && coversConfig.hero.mode === 'api';
+// API 模式只用冰蓝 LQIP，不预铺本地头图
+const bannerLqipStyle = compact ? undefined : getLqipStyle(heroUsesApi ? '' : heroFallback || defaultHeroImage);
 
 const locale = getLocaleFromUrl(Astro.url.pathname);
 
@@ -136,29 +138,65 @@ const copyFailedLabel = t(locale, 'common.copyFailed');
         </>
       ) : (
         <>
-          <h2 class="motion-rise shadow-text font-chill-round text-5xl/[1.2]">{siteConfig?.alternate}</h2>
-          <h1 class="motion-rise shadow-text font-chill-round mt-3 text-5xl/[1.2] font-bold tracking-widest" style="--i: 1">
-            {siteConfig?.title}
-          </h1>
-          <p class="motion-rise shadow-text mt-5 text-sm tracking-[0.2em]" style="--i: 2">= {siteConfig?.subtitle} =</p>
+          <h1 class="motion-rise shadow-text font-chill-round text-5xl/[1.2] font-bold tracking-widest">{siteConfig?.title}</h1>
+          {siteConfig?.alternate && (
+            <h2 class="motion-rise shadow-text font-chill-round mt-3 text-5xl/[1.2]" style="--i: 1">
+              {siteConfig.alternate}
+            </h2>
+          )}
+          {siteConfig?.subtitle && (
+            <p class="motion-rise shadow-text mt-5 text-sm tracking-[0.2em]" style="--i: 2">= {siteConfig.subtitle} =</p>
+          )}
         </>
       )
     }
   </div>
   <div
-    class:list={['relative -z-10 h-full min-h-60 w-full', compact && 'bg-card']}
+    class:list={[
+      'relative -z-10 h-full min-h-60 w-full',
+      compact && 'bg-card',
+      heroUsesApi && 'cover-api-frame is-loading',
+    ]}
     transition:persist={Astro.isPrerendered ? 'page-cover-banner' : 'page-cover-banner-runtime'}
     id="banner-box"
+    data-cover-frame={heroUsesApi ? '' : undefined}
     style={bannerLqipStyle}
   >
-    {Astro.isPrerendered ? <HeroImage
-      alt=""
-      class="h-full w-full object-cover"
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    /> : <img src={defaultHeroImage} srcset={defaultHeroSrcset} alt="" class="h-full w-full object-cover" width="1928" height="1080" sizes="100vw" loading="eager" fetchpriority="high" decoding="async" />}
+    {Astro.isPrerendered && !heroUsesApi && (heroFallback || defaultHeroImage) ? (
+      <HeroImage
+        alt=""
+        class="h-full w-full object-cover"
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    ) : heroUsesApi ? (
+      <img
+        alt=""
+        class="h-full w-full object-cover"
+        width="1928"
+        height="1080"
+        sizes="100vw"
+        decoding="async"
+        data-cover-slot="hero"
+        referrerpolicy="no-referrer"
+      />
+    ) : (
+      <img
+        src={heroFallback || defaultHeroImage}
+        srcset={defaultHeroSrcset}
+        alt=""
+        class="h-full w-full object-cover"
+        width="1928"
+        height="1080"
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        referrerpolicy="no-referrer"
+      />
+    )}
   </div>
   <WaveSvg />
 </div>

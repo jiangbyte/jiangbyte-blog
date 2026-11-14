@@ -51,8 +51,9 @@ const { post, siderType, isPostPage, articleTools = true } = Astro.props;
 </div>
 
 <script>
-  import { motionConfig } from '@constants/site-config';
+  import { coversConfig, motionConfig } from '@constants/site-config';
   import { setupArrivalRender } from '@lib/arrival-render';
+  import { setupRandomCovers } from '@lib/covers';
   import { setupHeaderContinuity } from '@lib/header-continuity';
   import { setupMorphTransitions } from '@lib/morph-transitions';
   import { setupPetalBurst } from '@lib/sakura/petal-burst';
@@ -68,6 +69,10 @@ const { post, siderType, isPostPage, articleTools = true } = Astro.props;
     }
   });
 
+  function bootCovers() {
+    void setupRandomCovers(coversConfig);
+  }
+
   setupMorphTransitions();
   setupHeaderContinuity();
   setupArrivalRender();
@@ -75,4 +80,6 @@ const { post, siderType, isPostPage, articleTools = true } = Astro.props;
   setupScrollbarActivity();
   setupTouchPrefetch();
   if (motionConfig.clickBurst) setupPetalBurst();
+  bootCovers();
+  document.addEventListener('astro:page-load', bootCovers);
 </script>

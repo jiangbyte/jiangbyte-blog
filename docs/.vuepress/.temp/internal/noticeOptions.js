@@ -1,1 +1,0 @@
-export const NOTICE_OPTIONS = JSON.parse("[{\"content\":\"本站记录技术笔记与项目说明。内容可引用改编，须署名并附来源，禁止商用（CC BY-NC 4.0）。\",\"path\":\"/\",\"title\":\"欢迎来到摸鱼猫泡泡\",\"showOnce\":true,\"actions\":[{\"text\":\"关于本站\",\"link\":\"/about/site.html\",\"type\":\"primary\"},{\"text\":\"知道了\"}],\"noticeKey\":\"welcome-2026-10-v2\"}]")

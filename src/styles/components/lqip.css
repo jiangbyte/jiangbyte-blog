@@ -1,9 +1,53 @@
 /**
- * LQIP (Low Quality Image Placeholder) styles
- * Simple gradient backgrounds extracted from image colors
+ * LQIP / 图片加载占位：统一冰蓝；API 封面加载中用 shimmer，避免裂图图标。
  */
 
-/* Fallback for external images without LQIP */
 .lqip-fallback {
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--placeholder));
+  background-image: linear-gradient(135deg, hsl(var(--placeholder)) 0%, hsl(var(--muted)) 55%, hsl(var(--accent)) 100%);
+}
+
+/* API 封面：未就绪的 img 不占位、不显示裂图 */
+img[data-cover-slot]:not([data-cover-ready]) {
+  display: none;
+}
+
+/* 加载中骨架扫光 */
+.cover-api-frame.is-loading {
+  position: relative;
+  isolation: isolate;
+}
+
+.cover-api-frame.is-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    hsl(var(--primary) / 0.14) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: cover-api-shimmer 1.35s ease-in-out infinite;
+}
+
+@keyframes cover-api-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-api-frame.is-loading::after {
+    animation: none;
+    background: hsl(var(--primary) / 0.08);
+  }
 }

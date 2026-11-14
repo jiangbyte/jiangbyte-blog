@@ -8,13 +8,14 @@
  * instead of cross-fading two snapshots.
  */
 
-const STATE_CLASSES = ['with-background', '-translate-y-full'];
+const STATE_CLASSES = ['with-background'];
 
 /**
  * A new page opens with the header shown. Transitions the Navigator started while the new state was
  * being captured are rewound, so the header moves together with the first frame of the cross-fade.
  */
 function settle(header: HTMLElement): void {
+  // 导航常驻固定，切换页面时清掉可能残留的收起态
   header.classList.remove('-translate-y-full');
   for (const animation of header.getAnimations({ subtree: true })) {
     if (animation instanceof CSSTransition) animation.currentTime = 0;

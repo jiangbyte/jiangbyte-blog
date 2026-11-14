@@ -27,6 +27,8 @@ export interface SiteBasicConfig {
   timezone?: string;
   /** ICP filing number. Supports plain text or { text, link } format */
   icp?: string | { text: string; link?: string };
+  /** 公安备案号。支持纯文本或 { text, link, icon } */
+  police?: string | { text: string; link?: string; icon?: string };
   /** Enable slug transliteration (converts CJK characters to pinyin/romaji) @default false */
   enableSlugTransliteration?: boolean;
 }
@@ -682,6 +684,53 @@ export interface WritingRoomConfig {
 }
 
 // =============================================================================
+// Covers (hero + post default) — local pool or random API
+// =============================================================================
+
+/** 封面图源：json 拉 URL，或 image 直链（可带 {seed}） */
+export interface CoverProvider {
+  kind: 'json' | 'image';
+  /** 请求地址；image 可用 `{seed}` 占位 */
+  url: string;
+  /** kind=json 时从响应里取图址的点路径，如 images.0.url */
+  pick?: string;
+}
+
+export type CoverMode = 'api' | 'local';
+
+export interface CoverSlotConfig {
+  /** api=走 providers；local=只用本地 fallback */
+  mode?: CoverMode;
+  /** API 失败或 mode=local 时的回退图 */
+  fallback?: string;
+  /** 文章默认封面本地池（仅 post） */
+  fallbackList?: string[];
+  /** 同会话复用同一张（hero 全局；post 按 seed） */
+  sessionSticky?: boolean;
+  /** 按顺序尝试的图源 */
+  providers?: CoverProvider[];
+}
+
+export interface CoversConfig {
+  hero?: CoverSlotConfig;
+  post?: CoverSlotConfig;
+}
+
+export interface ResolvedCoverSlotConfig {
+  mode: CoverMode;
+  /** 可选本地图；未配置则不兜底 */
+  fallback?: string;
+  fallbackList?: string[];
+  sessionSticky: boolean;
+  providers: CoverProvider[];
+}
+
+export interface ResolvedCoversConfig {
+  hero: ResolvedCoverSlotConfig;
+  post: ResolvedCoverSlotConfig & { fallbackList: string[] };
+}
+
+// =============================================================================
 // Root Configuration Type
 // =============================================================================
 
@@ -693,7 +742,10 @@ export interface SiteYamlConfig {
   social?: SocialConfig;
   friends?: FriendsConfig;
   announcements?: AnnouncementConfig[];
+  /** @deprecated 请用 covers.post.fallbackList；仍可读作 post 本地回退池 */
   defaultCoverList?: string[];
+  /** 页面头图与文章默认封面：local 或可配置随机 API */
+  covers?: CoversConfig;
   content?: ContentConfig;
   /** Motion intensity default and decorative sakura effects. */
   motion?: MotionConfig;

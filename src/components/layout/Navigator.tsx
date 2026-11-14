@@ -1,15 +1,14 @@
 /**
  * Navigator Component
  *
- * Navigation header with scroll-based visibility control.
- * Uses useScrollTrigger hook for optimized scroll handling.
+ * Navigation header; stays fixed while scrolling. useScrollTrigger only drives the
+ * condensed capsule background past the cover.
  */
 
 import ThemeToggle from '@components/theme/ThemeToggle';
 import { RESERVED_ROUTES } from '@constants/router';
 import { configuredSeriesSlugs, enabledSeriesSlugs, routers } from '@constants/site-config';
 import { useGlideIndicator } from '@hooks/useGlideIndicator';
-import { useIsTablet } from '@hooks/useMediaQuery';
 import { useScrollTrigger } from '@hooks/useScrollTrigger';
 import { Icon } from '@iconify/react';
 import { filterNavItems } from '@lib/utils';
@@ -69,18 +68,15 @@ function ButtonLink({ url, label, isActive, glideKey, onIntent, children }: Butt
 }
 
 const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale }: NavigatorProps) {
-  const { isBeyond, direction } = useScrollTrigger({
+  const { isBeyond } = useScrollTrigger({
     triggerDistance: 0.45,
     throttleMs: 80,
   });
 
-  const isTablet = useIsTablet();
   // Built pages keep their trailing slash ("/friends/"); configured nav paths have none.
   const pagePath = currentPath.replace(/(.)\/$/, '$1');
   const strippedPath = stripLocaleFromPath(pagePath);
-  const isPostPageMobile = isTablet && strippedPath.startsWith('/post/');
 
-  const firstScrollRef = useRef(true);
   const [intent, setIntent] = useState<string | null>(null);
   // Share one open menu across pointer and keyboard sessions. A nav dropdown also holds the pill on its trigger.
   const [openKey, setOpenKey] = useState<string | null>(null);
@@ -110,39 +106,14 @@ const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale 
     };
   }, []);
 
-  // Apply with-background class based on scroll position
-  useEffect(() => {
-    document.getElementById('site-header')?.classList.toggle('with-background', isBeyond);
-  }, [isBeyond]);
-
-  // Handle header visibility based on scroll
+  // 下滑不再收起导航；只根据是否越过封面切换胶囊底
   useEffect(() => {
     const siteHeader = document.getElementById('site-header');
     const mobileMenuContainer = document.getElementById('mobile-menu-container');
-
-    // Skip first scroll
-    if (firstScrollRef.current) {
-      firstScrollRef.current = false;
-      return;
-    }
-
-    // Post page mobile: keep header visible during scroll
-    if (isPostPageMobile) {
-      // Ensure header is visible
-      siteHeader?.classList.remove('-translate-y-full');
-      mobileMenuContainer?.classList.remove('-translate-y-full');
-      return;
-    }
-
-    // Normal behavior: hide on scroll down, show on scroll up
-    if (direction === 'down') {
-      siteHeader?.classList.add('-translate-y-full');
-      mobileMenuContainer?.classList.add('-translate-y-full');
-    } else if (direction === 'up') {
-      siteHeader?.classList.remove('-translate-y-full');
-      mobileMenuContainer?.classList.remove('-translate-y-full');
-    }
-  }, [direction, isPostPageMobile]);
+    siteHeader?.classList.toggle('with-background', isBeyond);
+    siteHeader?.classList.remove('-translate-y-full');
+    mobileMenuContainer?.classList.remove('-translate-y-full');
+  }, [isBeyond]);
 
   return (
     <div className="tablet:col-start-3 flex grow tablet:grow-0 items-center tablet:justify-self-end">

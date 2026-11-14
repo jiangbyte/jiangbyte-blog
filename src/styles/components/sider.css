@@ -66,18 +66,24 @@
   width: 4rem;
   height: 4rem;
   border-radius: 9999px;
+  /* LQIP 铺在底层；挥手动画时用伪层裁切，避免露出背景边 */
+  background-color: hsl(var(--placeholder));
   box-shadow:
     0 0 0 3px var(--sider-surface),
     0 0 0 4.5px hsl(var(--primary) / 0.32),
-    0 0.75rem 1.5rem -0.75rem rgb(233 84 107 / 0.55);
+    0 0.75rem 1.5rem -0.75rem rgb(107 168 224 / 0.55);
   transition: box-shadow 320ms var(--ease-out-quart);
 }
 
+/* 图片单独裁圆，挥手 rotate 时不让直角顶出圆形 */
 .home-avatar img {
+  display: block;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
   object-fit: cover;
+  background-color: hsl(var(--placeholder));
+  overflow: hidden;
 }
 
 .home-avatar img {
@@ -89,7 +95,7 @@
     box-shadow:
       0 0 0 3px var(--sider-surface),
       0 0 0 4.5px hsl(var(--primary) / 0.7),
-      0 0.75rem 1.75rem -0.5rem rgb(233 84 107 / 0.7);
+      0 0.75rem 1.75rem -0.5rem rgb(107 168 224 / 0.7);
   }
 }
 
@@ -134,7 +140,7 @@
   padding: 0.3125rem 0.75rem;
   border-radius: 0.875rem;
   background-image: var(--gradient-shoka-button);
-  box-shadow: 0 0.5rem 1rem -0.5rem rgb(233 84 107 / 0.7);
+  box-shadow: 0 0.5rem 1rem -0.5rem rgb(107 168 224 / 0.7);
   color: #fff;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -412,7 +418,7 @@ html:is([data-motion="reduced"], .motion-off) .home-greeting {
   background-image: var(--gradient-shoka-button);
   color: #fff;
   font-weight: 500;
-  box-shadow: 0 0.625rem 1.25rem -0.75rem rgb(233 84 107 / 0.75);
+  box-shadow: 0 0.625rem 1.25rem -0.75rem rgb(107 168 224 / 0.75);
 }
 
 .home-nav-row[aria-current="page"] .home-nav-icon {

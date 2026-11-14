@@ -112,15 +112,15 @@ export function BangumiCollection({ userId }: BangumiCollectionProps) {
         <div className="flex gap-5">
           {Array.from({ length: 3 }, (_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders have no stable id
-            <div key={i} className="h-5 w-14 animate-pulse rounded bg-muted" />
+            <div key={i} className="h-5 w-14 animate-pulse rounded bg-placeholder" />
           ))}
         </div>
         <div className="bangumi-grid">
           {Array.from({ length: 10 }, (_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders have no stable id
             <div key={i} className="animate-pulse">
-              <div className="aspect-[2/3] rounded-xl bg-muted" />
-              <div className="mt-2 h-3.5 w-3/4 rounded bg-muted" />
+              <div className="aspect-[2/3] rounded-xl bg-placeholder" />
+              <div className="mt-2 h-3.5 w-3/4 rounded bg-placeholder" />
             </div>
           ))}
         </div>

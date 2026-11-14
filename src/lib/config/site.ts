@@ -11,13 +11,20 @@ import yamlConfig from '../../../config/site.yaml';
 import { DEFAULT_TIMEZONE, isValidTimezone } from '../timezone';
 import { normalizeColophonConfig } from './colophon';
 import { normalizeContentConfig } from './content';
+import { normalizeCoversConfig } from './covers';
 import { normalizeEditorConfig } from './editor';
 import { enabledFeaturedSeriesSlugs, normalizeFeaturedSeries } from './featured-series';
 import { normalizeFriendGroups } from './friends';
 import { normalizeMotionConfig } from './motion';
 import { normalizePostActionsConfig } from './post-actions';
 import { RESERVED_ROUTES } from './reserved-routes';
-import type { I18nConfig, ResolvedContentConfig, ResolvedMotionConfig, ResolvedSiteConfig } from './types';
+import type {
+  I18nConfig,
+  ResolvedContentConfig,
+  ResolvedCoversConfig,
+  ResolvedMotionConfig,
+  ResolvedSiteConfig,
+} from './types';
 
 /** Category name → URL slug map, e.g. `{ '随笔': 'life' }`. */
 export const categoryMap: Record<string, string> = yamlConfig.categoryMap ?? {};
@@ -46,6 +53,9 @@ export const contentConfig: ResolvedContentConfig = normalizeContentConfig(yamlC
 
 /** Default motion level and sakura effect switches with field-level defaults applied. */
 export const motionConfig: ResolvedMotionConfig = normalizeMotionConfig(yamlConfig.motion);
+
+/** 页面头图 / 文章默认封面：api 或 local。 */
+export const coversConfig: ResolvedCoversConfig = normalizeCoversConfig(yamlConfig.covers);
 
 /** Writing room pages are only available when explicitly enabled. */
 export const editorConfig = normalizeEditorConfig(yamlConfig.editor);

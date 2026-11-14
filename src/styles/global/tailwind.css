@@ -10,6 +10,18 @@
   font-display: swap;
 }
 
+/* 软冰拉丁：Outfit（OFL），与寒蝉圆体标题搭配 */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/outfit/outfit-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -33,6 +45,8 @@
     scroll-behavior: smooth;
     letter-spacing: 0.02em;
     color: hsl(var(--foreground));
+    /* 正文：Outfit（拉丁）+ 思源/系统黑体（中文），偏清爽软冰 */
+    font-family: "Outfit", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   }
 
   h1,
@@ -41,7 +55,8 @@
   h4,
   h5,
   h6 {
-    font-family: "寒蝉全圆体", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Bold 子集注册名为「寒蝉全圆体 Bold」，需写在前面才能吃到真粗体 */
+    font-family: "寒蝉全圆体 Bold", "寒蝉全圆体", "Outfit", "PingFang SC", "Microsoft YaHei", sans-serif;
     letter-spacing: 0.02em;
   }
 
@@ -51,11 +66,11 @@
 
   /* Japanese pages: use Gen Jyuu Gothic P for correct JIS glyphs (fix #113) */
   :lang(ja) {
-    font-family: "Gen Jyuu Gothic P", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Gen Jyuu Gothic P", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   :lang(ja) :is(h1, h2, h3, h4, h5, h6) {
-    font-family: "Gen Jyuu Gothic P", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Gen Jyuu Gothic P", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   html {
@@ -105,6 +120,11 @@
         @apply bg-white;
       }
     }
+    /* Logo 自带描边投影，去掉 header 通用字影以免糊成一团 */
+    .site-logo,
+    .site-logo .logo-text {
+      text-shadow: none;
+    }
     .nav-dropdown a {
       text-shadow: none;
     }
@@ -115,21 +135,49 @@
   .clip-path-post-img-right {
     clip-path: polygon(0 0%, 100% 0%, 100% 100%, 8% 100%);
   }
+  /*
+   * 站点名 Logo：参考粉圆描边贴纸风。
+   * 字体用主题自带的「寒蝉全圆体」（开源可商用），不用 Bear Days（拉丁专用）。
+   */
   .logo-text {
-    font-size: 2rem;
-    text-shadow:
-      3px 4px 2px #060000,
-      -1px -1px 0px #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 0.95;
-    text-align: center;
-    font-family: "Bear Days", sans-serif;
+    position: relative;
+    display: inline-block;
+    font-size: 1.25rem;
+    /* Bold 文件族名是「寒蝉全圆体 Bold」，不是同族 weight:700 */
+    font-family: "寒蝉全圆体 Bold", "寒蝉全圆体", "ChillRoundF", "Outfit", "PingFang SC", "Microsoft YaHei", sans-serif;
     font-weight: 700;
-    color: #e9546b;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-align: center;
+    text-transform: none;
+    text-shadow: none;
+    /* 柔蓝填充 */
+    background-image: linear-gradient(180deg, #c5dff5 0%, #8ec4ec 55%, #6ba8e0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* 白描边 + 柔和投影（filter 才能作用在 clip 文字上） */
+    filter: drop-shadow(0 -1.5px 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(1.5px 0 0 #fff)
+      drop-shadow(-1.2px -1.2px 0 #fff) drop-shadow(1.2px -1.2px 0 #fff) drop-shadow(-1.2px 1.2px 0 #fff)
+      drop-shadow(1.2px 1.2px 0 #fff) drop-shadow(2px 3px 0 rgba(6, 0, 0, 0.28));
+  }
+
+  .logo-text::after {
+    content: "";
+    position: absolute;
+    top: -0.2em;
+    right: -0.65em;
+    width: 0.9em;
+    height: 0.9em;
+    background:
+      center / contain no-repeat
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cpath%20fill%3D%22%239ec8ef%22%20d%3D%22M32.85%2027.4L33.05%2022L36.4%2020.2L34.3%2019.5L33.15%2016.5L37.2%2015L34.5%2014.2L33.25%2011.2L36.6%209.6L34.2%208.9L33.2%206.4L35.8%204.6L33.4%205L32%202.4L28.2%204.6L30.8%206.4L29.8%208.9L27.4%209.6L30.75%2011.2L29.5%2014.2L26.8%2015L30.85%2016.5L29.7%2019.5L27.6%2020.2L30.95%2022L31.15%2027.4ZM36.41%2030.44L41.19%2027.91L44.42%2029.91L43.98%2027.74L46%2025.25L49.32%2028L48.67%2025.27L50.64%2022.68L53.7%2024.78L53.11%2022.36L54.77%2020.24L57.63%2021.59L56.08%2019.71L57.63%2017.2L53.83%2015.01L53.57%2018.16L50.91%2018.54L49.1%2016.82L49.39%2020.52L46.17%2020.93L44.12%2019L44.85%2023.25L41.68%2023.76L40.02%2022.29L40.14%2026.09L35.56%2028.96ZM35.56%2035.04L40.14%2037.91L40.02%2041.71L41.68%2040.24L44.85%2040.75L44.12%2045L46.17%2043.07L49.39%2043.48L49.1%2047.18L50.91%2045.46L53.57%2045.84L53.83%2048.99L54.68%2046.71L57.63%2046.8L57.63%2042.41L54.77%2043.76L53.11%2041.64L53.7%2039.22L50.64%2041.32L48.67%2038.73L49.32%2036L46%2038.75L43.98%2036.26L44.42%2034.09L41.19%2036.09L36.41%2033.56ZM31.15%2036.6L30.95%2042L27.6%2043.8L29.7%2044.5L30.85%2047.5L26.8%2049L29.5%2049.8L30.75%2052.8L27.4%2054.4L29.8%2055.1L30.8%2057.6L28.2%2059.4L30.6%2059L32%2061.6L35.8%2059.4L33.2%2057.6L34.2%2055.1L36.6%2054.4L33.25%2052.8L34.5%2049.8L37.2%2049L33.15%2047.5L34.3%2044.5L36.4%2043.8L33.05%2042L32.85%2036.6ZM27.59%2033.56L22.81%2036.09L19.58%2034.09L20.02%2036.26L18%2038.75L14.68%2036L15.33%2038.73L13.36%2041.32L10.3%2039.22L10.89%2041.64L9.23%2043.76L6.37%2042.41L7.92%2044.29L6.37%2046.8L10.17%2048.99L10.43%2045.84L13.09%2045.46L14.9%2047.18L14.61%2043.48L17.83%2043.07L19.88%2045L19.15%2040.75L22.32%2040.24L23.98%2041.71L23.86%2037.91L28.44%2035.04ZM28.44%2028.96L23.86%2026.09L23.98%2022.29L22.32%2023.76L19.15%2023.25L19.88%2019L17.83%2020.93L14.61%2020.52L14.9%2016.82L13.09%2018.54L10.43%2018.16L10.17%2015.01L9.32%2017.29L6.37%2017.2L6.37%2021.59L9.23%2020.24L10.89%2022.36L10.3%2024.78L13.36%2022.68L15.33%2025.27L14.68%2028L18%2025.25L20.02%2027.74L19.58%2029.91L22.81%2027.91L27.59%2030.44ZM32%2027L36.33%2029.5L36.33%2034.5L32%2037L27.67%2034.5L27.67%2029.5Z%22%2F%3E%3C%2Fsvg%3E");
+    pointer-events: none;
+    filter: drop-shadow(1px 1px 0 rgba(6, 0, 0, 0.18));
   }
 }
 
 .dark .logo-text {
-  color: #ed788c;
+  background-image: linear-gradient(180deg, #c5dff5 0%, #8ec4ec 50%, #6ba8e0 100%);
 }

@@ -14,7 +14,7 @@ export default function DeferredComment({ provider }: { provider: keyof typeof p
   const mounted = useIsMounted();
   const { t } = useTranslation();
   const Provider = providers[provider];
-  const placeholder = <div className="h-80 animate-pulse rounded-xl bg-muted/30" aria-hidden="true" />;
+  const placeholder = <div className="h-80 animate-pulse rounded-xl bg-placeholder/60" aria-hidden="true" />;
 
   return (
     <div className="min-h-80">

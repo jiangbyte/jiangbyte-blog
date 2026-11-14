@@ -10,6 +10,7 @@ import { resolveEditorNavigation } from '@lib/config/editor';
 import { normalizeMomentsConfig, resolveMomentsNavigation } from '@lib/config/moments';
 import {
   contentConfig,
+  coversConfig,
   editorConfig,
   enabledLocaleCodes,
   enabledSeriesSlugList,
@@ -33,13 +34,21 @@ import type { UmamiStatsConfig } from '@/types/umami-stats';
 import yamlConfig from '../../config/site.yaml';
 import { DEFAULT_ROUTERS, RESERVED_ROUTES } from './router';
 
-export { contentConfig, editorConfig, i18nConfig, motionConfig, siteConfig };
+export { contentConfig, coversConfig, editorConfig, i18nConfig, motionConfig, siteConfig };
 
 export const socialConfig: SocialConfig = yamlConfig.social ?? {};
 
 // ICP filing config — normalize string shorthand to { text } object
 export const icpConfig: { text: string; link?: string } | undefined = (() => {
   const raw = yamlConfig.site.icp;
+  if (!raw) return undefined;
+  if (typeof raw === 'string') return { text: raw };
+  return raw;
+})();
+
+/** 公安备案：文案、查询链接与可选图标 */
+export const policeConfig: { text: string; link?: string; icon?: string } | undefined = (() => {
+  const raw = yamlConfig.site.police;
   if (!raw) return undefined;
   if (typeof raw === 'string') return { text: raw };
   return raw;
@@ -54,8 +63,8 @@ export const seoConfig = {
   url: siteConfig.site,
 };
 
-const BUILT_IN_COVERS = Array.from({ length: 21 }, (_, i) => `/img/cover/${i + 1}.webp`);
-export const defaultCoverList = yamlConfig?.defaultCoverList?.length ? yamlConfig.defaultCoverList : BUILT_IN_COVERS;
+/** 文章无封面且 mode=local 时的可选本地池（未配置则为空） */
+export const defaultCoverList = coversConfig.post.fallbackList ?? [];
 
 // Map YAML comment config
 export const commentConfig: CommentConfig = yamlConfig.comment || {};

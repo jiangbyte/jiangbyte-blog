@@ -110,7 +110,8 @@ export class PetalField {
       x: random(-40, this.width + 40),
       y: scatter ? random(-40, this.height * 0.9) : random(-80, -20),
       fall: random(22, 44),
-      size: random(0.8, 1.3) * (0.5 + depth * 0.5),
+      // viewBox 从 24 提到 64 后按比例缩小，保持封面雪花视觉尺寸
+      size: random(0.8, 1.3) * (0.5 + depth * 0.5) * (24 / 64),
       depth,
       rotation: random(0, Math.PI * 2),
       spin: random(-1.1, 1.1),

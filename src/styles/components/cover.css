@@ -6,14 +6,15 @@
   behind the title and under the navigation keeps white text legible.
 */
 .cover-scrim {
-  --scrim: 24 10 22;
+  /* 冰蓝遮罩：替代旧樱粉/葡萄紫 scrim，白字仍可读 */
+  --scrim: 28 52 86;
   background:
     radial-gradient(ellipse 62% 52% at 50% 44%, rgb(var(--scrim) / 0.34), transparent 72%),
     linear-gradient(to bottom, rgb(var(--scrim) / 0.38), rgb(var(--scrim) / 0) 24%), rgb(var(--scrim) / 0.14);
 }
 
 .dark .cover-scrim {
-  --scrim: 16 10 30;
+  --scrim: 12 28 48;
   background:
     radial-gradient(ellipse 62% 52% at 50% 44%, rgb(var(--scrim) / 0.42), transparent 72%),
     linear-gradient(to bottom, rgb(var(--scrim) / 0.46), rgb(var(--scrim) / 0) 26%), rgb(var(--scrim) / 0.3);
@@ -28,8 +29,8 @@
 
 .cover-copy :is(h1, h2) {
   text-shadow:
-    0 0.15rem 0.35rem rgb(28 8 20 / 0.45),
-    0 0.4rem 1.6rem rgb(233 84 107 / 0.35);
+    0 0.15rem 0.35rem rgb(20 40 70 / 0.4),
+    0 0.4rem 1.6rem rgb(107 168 224 / 0.35);
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
@@ -84,8 +85,8 @@
   line-height: 1.8;
   letter-spacing: 0.02em;
   text-shadow:
-    0 1px 2px rgb(20 8 20 / 0.55),
-    0 0 1.25rem rgb(20 8 20 / 0.35);
+    0 1px 2px rgb(20 40 70 / 0.55),
+    0 0 1.25rem rgb(20 40 70 / 0.35);
   text-wrap: pretty;
 }
 

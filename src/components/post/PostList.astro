@@ -18,7 +18,7 @@ interface Props {
 
 const { posts, page, showPaginator = true, baseUrl, isHomePage = false } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url.pathname);
-const covers = shuffle(defaultCoverList);
+const covers = defaultCoverList.length > 0 ? shuffle(defaultCoverList) : [];
 
 const imagePosition = contentConfig.postCardImagePosition;
 const isUniformPosition = imagePosition !== 'alternating';
@@ -57,7 +57,7 @@ function getLeftClip(index: number): boolean {
             key={post.slug}
             data={post}
             leftClip={getLeftClip(index)}
-            randomCover={covers[index % covers.length]}
+            randomCover={covers.length ? covers[index % covers.length] : ''}
             isUniformPosition={isUniformPosition}
           />
         ))}

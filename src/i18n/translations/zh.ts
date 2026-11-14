@@ -24,6 +24,10 @@ export const uiStrings = {
   'archives.legendMany': '多',
   'archives.calendar': '写作日历',
   'archives.monthLabel': '{year} 年 {month} 月 · {count} 篇',
+  'archives.dayLabel': '{year} 年 {month} 月 {day} 日 · {count} 篇',
+  'archives.weekdayMon': '一',
+  'archives.weekdayWed': '三',
+  'archives.weekdayFri': '五',
 
   // ── Navigation ──────────────────────────────────────────────
   'nav.home': '首页',

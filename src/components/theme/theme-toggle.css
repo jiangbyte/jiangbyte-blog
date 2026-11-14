@@ -11,7 +11,7 @@
   width: 36px;
   height: 36px;
   position: relative;
-  box-shadow: inset 16px -16px 0 0 var(--theme-toggle-color, #ffbb52);
+  box-shadow: inset 16px -16px 0 0 var(--theme-toggle-color, #7eb4e4);
   transform: scale(1) rotate(-2deg);
   transition:
     box-shadow 0.5s ease 0s,
@@ -40,14 +40,14 @@
   top: 50%;
   left: 50%;
   box-shadow:
-    0 -23px 0 var(--theme-toggle-color, #ffbb52),
-    0 23px 0 var(--theme-toggle-color, #ffbb52),
-    23px 0 0 var(--theme-toggle-color, #ffbb52),
-    -23px 0 0 var(--theme-toggle-color, #ffbb52),
-    15px 15px 0 var(--theme-toggle-color, #ffbb52),
-    -15px 15px 0 var(--theme-toggle-color, #ffbb52),
-    15px -15px 0 var(--theme-toggle-color, #ffbb52),
-    -15px -15px 0 var(--theme-toggle-color, #ffbb52);
+    0 -23px 0 var(--theme-toggle-color, #7eb4e4),
+    0 23px 0 var(--theme-toggle-color, #7eb4e4),
+    23px 0 0 var(--theme-toggle-color, #7eb4e4),
+    -23px 0 0 var(--theme-toggle-color, #7eb4e4),
+    15px 15px 0 var(--theme-toggle-color, #7eb4e4),
+    -15px 15px 0 var(--theme-toggle-color, #7eb4e4),
+    15px -15px 0 var(--theme-toggle-color, #7eb4e4),
+    -15px -15px 0 var(--theme-toggle-color, #7eb4e4);
   transform: scale(0);
   transition: all 0.3s ease;
 }
@@ -62,7 +62,7 @@
 }
 
 .dark .toggle-indicator::before {
-  background: var(--theme-toggle-color, #ffbb52);
+  background: var(--theme-toggle-color, #7eb4e4);
   transition: background 0.3s ease 0.1s;
 }
 

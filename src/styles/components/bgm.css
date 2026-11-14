@@ -28,7 +28,7 @@
 
 .bgm-panel-placeholder {
   display: block;
-  background: hsl(var(--muted));
+  background: hsl(var(--placeholder));
   border-radius: 0.5em;
 }
 

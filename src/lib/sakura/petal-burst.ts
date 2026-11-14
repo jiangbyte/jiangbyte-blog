@@ -91,9 +91,9 @@ function burstAt(x: number, y: number): void {
     const petal = document.createElement('span');
     petal.className = 'petal-burst';
     petal.style.width = `${size}px`;
-    petal.style.height = `${size * 1.2}px`;
-    petal.style.margin = `${-size * 0.6}px 0 0 ${-size / 2}px`;
-    // The base color reaches further up than on the cover so the petals still read on white cards.
+    petal.style.height = `${size}px`;
+    petal.style.margin = `${-size / 2}px 0 0 ${-size / 2}px`;
+    // 雪花在浅色卡片上也要能看清，基色略往下压
     petal.style.background = `linear-gradient(${tip}, ${base} 70%)`;
     host.append(petal);
 

@@ -6,10 +6,12 @@
   --pf-text-muted: #767676;
   --pf-background: var(--gradient-bg-start);
   --pf-border: #e5e5e5;
-  --pf-border-focus: hsl(var(--primary));
+  --pf-border-focus: transparent;
   --pf-hover: hsl(var(--accent));
   --pf-mark: hsl(var(--primary));
-  --pf-outline-focus: hsl(var(--primary));
+  /* 搜索框在弹层内已有上下文，不再叠一层主色描边 */
+  --pf-outline-focus: transparent;
+  --pf-outline-width: 0px;
   --pf-font: inherit;
   --pf-input-height: 2.5rem;
   --pf-input-font-size: 1rem;
@@ -23,9 +25,10 @@
   --pf-text-secondary: #b7b7b7;
   --pf-text-muted: #a0a0a0;
   --pf-border: rgba(255, 255, 255, 0.15);
-  --pf-border-focus: hsl(var(--primary));
+  --pf-border-focus: transparent;
   --pf-hover: rgba(255, 255, 255, 0.08);
   --pf-mark: hsl(var(--primary));
+  --pf-outline-focus: transparent;
 }
 
 #search-for-dialog,
@@ -45,7 +48,15 @@
   --pf-text-muted: hsl(var(--muted-foreground));
   --pf-input-height: 3.5rem;
   --pf-input-font-size: 1.0625rem;
+  /* 覆盖 Pagefind 默认 480px，让输入与结果列表铺满弹层 */
+  --pf-searchbox-max-width: 100%;
   --pf-searchbox-dropdown-max-height: min(58dvh, 32rem);
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox,
+:is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog pagefind-searchbox {
+  width: 100%;
+  max-width: none;
 }
 
 /* Keyboard hints only mean something once there is a result to move through. */
@@ -75,8 +86,17 @@
   border-radius: 0;
   background: transparent;
   box-shadow: none;
+  outline: none;
   caret-color: hsl(var(--primary));
   transition: border-color 200ms var(--ease-out-quart);
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox-input:focus,
+:is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox-input:focus-visible {
+  border-color: transparent;
+  border-bottom-color: color-mix(in oklab, currentColor 10%, transparent);
+  outline: none;
+  box-shadow: none;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox.open .pf-searchbox-input {
@@ -85,6 +105,8 @@
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox-dropdown {
   position: static;
+  width: 100%;
+  max-width: none;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -92,6 +114,7 @@
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .search-dialog .pf-searchbox-results {
+  width: 100%;
   padding: 0.5rem;
 }
 

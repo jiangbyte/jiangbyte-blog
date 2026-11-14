@@ -17,6 +17,8 @@ interface Props {
 const { isPostPage = false, tocNumbering = true } = Astro.props;
 const { alternate, title, showLogo } = siteConfig;
 const locale = getLocaleFromUrl(Astro.url.pathname);
+// 页头显示中文站名；alternate 给封面第二行 / SEO，不盖过站名
+const brandText = title || alternate || '';
 ---
 
 <div
@@ -32,10 +34,10 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
         class="site-logo tablet:hidden -my-4 mr-4 flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap"
         href="/"
         target="_self"
-        title={alternate || title}
-        aria-label={alternate || title}
+        title={brandText}
+        aria-label={brandText}
       >
-        {showLogo ? <img src={logoSrc} alt="" class="h-8 w-auto" width="448" height="153" /> : <p class="logo-text">{alternate || title}</p>}
+        {showLogo ? <img src={logoSrc} alt="" class="h-8 w-auto" width="448" height="153" /> : <p class="logo-text">{brandText}</p>}
       </a>
       <!-- Mobile: MobilePostHeader (shows heading on post pages, logo otherwise) -->
       <div class="tablet:col-start-2 tablet:flex hidden items-center justify-center">
@@ -45,13 +47,13 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
             isPostPage={isPostPage}
             enableNumbering={tocNumbering}
             logoElement={showLogo ? 'svg' : 'text'}
-            logoText={alternate || title}
+            logoText={brandText}
             logoSrc={logoSrc}
             locale={locale}
           />
         ) : (
           <a href={localizedPath('/', locale)} class="flex items-center gap-1">
-            {showLogo ? <img src={logoSrc} alt={alternate || title} class="h-8 w-auto" width="448" height="153" /> : <span class="logo-text">{alternate || title}</span>}
+            {showLogo ? <img src={logoSrc} alt={brandText} class="h-8 w-auto" width="448" height="153" /> : <span class="logo-text">{brandText}</span>}
           </a>
         )}
       </div>

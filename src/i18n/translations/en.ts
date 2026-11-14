@@ -25,6 +25,10 @@ export const uiStrings: UIStrings = {
   'archives.legendMany': 'More',
   'archives.calendar': 'Writing calendar',
   'archives.monthLabel': '{year}, month {month} · {count} posts',
+  'archives.dayLabel': '{year}-{month}-{day} · {count} posts',
+  'archives.weekdayMon': 'Mon',
+  'archives.weekdayWed': 'Wed',
+  'archives.weekdayFri': 'Fri',
 
   // ── Navigation ──────────────────────────────────────────────
   'nav.home': 'Home',
