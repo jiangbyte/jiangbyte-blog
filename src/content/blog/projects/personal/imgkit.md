@@ -10,8 +10,8 @@ tags:
 categories:
   - 项目
 ---
-- 仓库：<https://github.com/jiangbyte/imgkit>
-- Release：<https://github.com/jiangbyte/imgkit/releases/tag/v1.0.0>
+- 仓库：<https://github.com/jiangfolio/imgkit>
+- Release：<https://github.com/jiangfolio/imgkit/releases/tag/v1.0.0>
 
 **imgkit** 是即时图像处理小工具：上传即处理、结果直接下载，全程内存、不写磁盘、无需登录。FastAPI 单进程托管 Vue3 前端与 API，一次 `make run` 即可访问。
 

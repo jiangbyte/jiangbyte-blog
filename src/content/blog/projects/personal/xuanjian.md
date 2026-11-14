@@ -10,7 +10,7 @@ tags:
 categories:
   - 项目
 ---
-- 仓库：<https://github.com/jiangbyte/xuanjian>
+- 仓库：<https://github.com/jiangfolio/xuanjian>
 
 **玄鉴（Xuanjian）** 是面向运维与现场排查的 AI 桌面工作台：主机清单、本地 / SSH / WSL 终端、SFTP、脚本与笔记、会话录制、本机网络工具与 Docker 侧栏，并内置 **玄鉴 Agent**。LangGraph 本地编排，在独立下栏终端可观测执行，按 ReAct 完成排查与运维。数据落 SQLite，跨 Windows / macOS / Linux。当前版本 `1.3.7`，MIT，`io.github.jiangbyte.xuanjian`。
 

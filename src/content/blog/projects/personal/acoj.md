@@ -10,9 +10,9 @@ tags:
 categories:
   - 项目
 ---
-- 仓库：<https://github.com/jiangbyte/acoj>
+- 仓库：<https://github.com/jiangfolio/acoj>
 
-**ACOJ** 是在线评测（OJ）monorepo：在 HEI 脚手架上扩展题库、提交判题与多执行机调度，提供 **Admin**（Vue 3）、**Portal**（React 19）与统一 Spring Boot API。判题执行依赖 [SparkSandbox](https://github.com/jiangbyte/SparkSandbox)：**沙箱只编译与限资源运行，AC / WA 在 ACOJ 裁决**。Apache License 2.0。
+**ACOJ** 是在线评测（OJ）monorepo：在 HEI 脚手架上扩展题库、提交判题与多执行机调度，提供 **Admin**（Vue 3）、**Portal**（React 19）与统一 Spring Boot API。判题执行依赖 [SparkSandbox](https://github.com/jiangfolio/SparkSandbox)：**沙箱只编译与限资源运行，AC / WA 在 ACOJ 裁决**。Apache License 2.0。
 
 相对「沙箱内直接出最终结果」的一体化 OJ，隔离执行与题目语义拆开：执行机加权调度、熔断、排水、租约换机；平台保留测例版本、标签、发布校验与做题统计。`modules/oj` 叠在脚手架之上，而不是从零拼一套账号与存储。
 
@@ -77,5 +77,5 @@ flowchart TB
 
 ## 相关项目
 
-- [SparkSandbox](https://github.com/jiangbyte/SparkSandbox)：隔离编译与运行
+- [SparkSandbox](https://github.com/jiangfolio/SparkSandbox)：隔离编译与运行
 - [hei-boot](https://github.com/jiangbyte/hei-boot) · [hei-admin](https://github.com/jiangbyte/hei-admin) · [hei-portal](https://github.com/jiangbyte/hei-portal)：server / 双端同源脚手架
