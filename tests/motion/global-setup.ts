@@ -15,12 +15,7 @@ export default async function globalSetup(config: FullConfig) {
       try {
         await page.goto(config.projects[0].use.baseURL ?? 'http://127.0.0.1:4339');
         await page.evaluate(async () => {
-          const paths = [
-            '/tests/motion/fixtures/segmented.tsx',
-            '/tests/motion/fixtures/snowfall.tsx',
-            '/src/components/moments/MessageBody.astro?astro&type=script&index=0&lang.ts',
-            '/src/components/moments/MessageCard.astro?astro&type=script&index=0&lang.ts',
-          ];
+          const paths = ['/tests/motion/fixtures/segmented.tsx', '/tests/motion/fixtures/snowfall.tsx'];
           await Promise.all(paths.map((path) => import(/* @vite-ignore */ path)));
           const spoiler = document.createElement('spoiler-span');
           spoiler.textContent = 'Warm motion fixture';

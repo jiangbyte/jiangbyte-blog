@@ -1,11 +1,11 @@
 /**
  * Settings Registry
  *
- * Declarative registry for the Settings Center; see docs/adr/0001.
+ * Declarative registry for the Settings Center.
  * Add settings here and implement their application logic in src/store/settings.ts.
  */
 
-import { bgmConfig, christmasConfig } from '@constants/site-config';
+import { bgmConfig } from '@constants/site-config';
 import type { TranslationKey } from '@/i18n/types';
 
 export type SettingSection = 'reader' | 'general';
@@ -29,7 +29,7 @@ export interface SettingItem {
   /** Options for segmented controls. */
   options?: SettingOption[];
   /** Build-time feature gate that hides unavailable settings. */
-  gatedBy?: 'christmas' | 'bgm';
+  gatedBy?: 'bgm';
   /** Disable this setting while the motion level is `reduced`. */
   disabledByReducedMotion?: boolean;
 }
@@ -87,13 +87,6 @@ export const SETTINGS_REGISTRY: SettingItem[] = [
     i18nKey: 'settings.scrollProgress',
   },
   {
-    key: 'christmas',
-    section: 'general',
-    type: 'switch',
-    i18nKey: 'settings.christmas',
-    gatedBy: 'christmas',
-  },
-  {
     key: 'bgmWidget',
     section: 'general',
     type: 'switch',
@@ -124,7 +117,6 @@ export const SETTINGS_REGISTRY: SettingItem[] = [
  * Hide settings whose build-time feature is unavailable.
  */
 export function isSettingVisible(item: SettingItem): boolean {
-  if (item.gatedBy === 'christmas') return christmasConfig.enabled;
   if (item.gatedBy === 'bgm') return bgmConfig.enabled && bgmConfig.audio.length > 0;
   return true;
 }

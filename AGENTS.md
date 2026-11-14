@@ -4,7 +4,7 @@ Guidance for AI coding agents (Claude Code, Codex, etc.) working in this reposit
 
 ## Project Overview
 
-astro-koharu is an Astro-based blog rebuilt from Hexo, inspired by the Shoka theme. It uses React for interactive components, Tailwind CSS for styling, and maintains compatibility with legacy Hexo blog content.
+摸鱼猫泡泡（code-guide）是基于 [astro-koharu](https://github.com/cosZone/astro-koharu) 的个人站点 fork。React 交互、Tailwind 样式；**不再使用** `pnpm koharu update`，主题层改动按本仓维护。
 
 ## Core Engineering Principles
 
@@ -43,11 +43,12 @@ astro-koharu is an Astro-based blog rebuilt from Hexo, inspired by the Shoka the
 
 ## IMPORTANT Guidelines
 
-- **Documentation lookup**: Use Context7 MCP server or WebSearch for official docs
+- **Documentation lookup**: Use Context7 MCP server or WebSearch for official Astro/React/Tailwind docs（本仓已移除上游 `docs/`）
 - **Keep AGENTS.md updated**: Ask to update when making architectural changes
 - **Run lint before completion**: `pnpm lint:fix` must pass before completing tasks
 - **Check for dead code**: Run `pnpm knip` periodically
 - **Build cache**: `.cache/og-data.json` is intentionally committed to Git for build acceleration (OG metadata cache for link embeds). Do NOT add it to `.gitignore`. Other files under `.cache/` (transformers models, summaries-cache) are already ignored.
+- **Do not reintroduce**: moments、christmas、bangumi、cms workspace（已拆除）
 
 ## Development Commands
 
@@ -60,18 +61,16 @@ pnpm build            # Build for production
 pnpm preview          # Preview production build
 pnpm check            # Run Astro type checking
 pnpm test             # Run all node:test suites (see package.json test:* scripts)
-pnpm cms:install && pnpm cms   # Local CMS (React/Vite app in cms/) at http://localhost:4322
 
 # Linting & Code Quality
 pnpm lint             # Run Biome linter and formatter
 pnpm lint:fix         # Auto-fix linting issues
 pnpm knip             # Find unused files/dependencies
 
-# Koharu CLI (Interactive TUI)
+# Koharu CLI（本仓仍保留 backup/migrate/generate；勿用 update）
 pnpm koharu              # Interactive menu
 pnpm koharu backup       # Backup blog content and config (--full for complete backup)
 pnpm koharu restore      # Restore from backup (--latest, --dry-run, --force)
-pnpm koharu update       # Update theme from upstream (--check, --skip-backup, --force, --rebase, --clean)
 pnpm koharu migrate      # Migrate legacy post links (--dry-run, --force; automatically backs up before writes)
 pnpm koharu generate     # Generate content assets (interactive menu)
 pnpm koharu generate lqips        # Generate LQIP image placeholders
@@ -84,7 +83,7 @@ pnpm koharu list         # List all backups
 
 **Note on Configuration Changes:** After modifying `config/site.yaml`, restart the dev server or rebuild. The YAML configuration is cached during build for performance.
 
-**Config normalization:** `src/lib/config/site.ts` is the single YAML parse/assembly point. Each config section has a pure `normalize*(raw)` function in `src/lib/config/` (content, featured-series, moments) owning its default table and validation — add new sections there, with node:test coverage, instead of reading `yamlConfig` ad hoc. `src/constants/site-config.ts` is a thin assembly/compat layer; `src/lib` must not import from `@constants/site-config`.
+**Config normalization:** `src/lib/config/site.ts` is the single YAML parse/assembly point. Each config section has a pure `normalize*(raw)` function in `src/lib/config/` (content, featured-series, covers, ……) owning its default table and validation — add new sections there, with node:test coverage, instead of reading `yamlConfig` ad hoc. `src/constants/site-config.ts` is a thin assembly/compat layer; `src/lib` must not import from `@constants/site-config`.
 
 ## Architecture
 
@@ -148,8 +147,6 @@ pages/ → components/ → hooks/ → lib/ → constants/
 
 **Featured Series**: Special category-based content series with dedicated pages and homepage highlights. Configured via `featuredSeries` in `config/site.yaml`. Each series requires a unique `slug` (must not conflict with reserved routes) and `categoryName`. Supports multiple series, individual enable/disable, and homepage highlight control. Dynamic routes generated at `[seriesSlug].astro`.
 
-**Bangumi Page**: Optional media tracking page integrating [Bangumi API](https://api.bgm.tv). Configured via `bangumi` section in `config/site.yaml` — comment out to disable (page + navigation auto-hidden). Data fetched client-side in React (`BangumiCollection` component with `client:load`). Types in `src/types/bangumi.ts`, API client in `src/lib/bangumi/`, data hook in `src/hooks/useBangumiData.ts`. Navigation item auto-injected via `routers` in `src/constants/site-config.ts`.
-
 **Theme System**: Dark/light toggle with localStorage, inline check in `<head>` prevents FOUC.
 
 **i18n System**: Two-layer translation architecture with locale-aware routing.
@@ -168,7 +165,7 @@ pages/ → components/ → hooks/ → lib/ → constants/
 
 **Post source & actions**: Each public post's raw file (frontmatter included) is emitted at `<post url>.md` (`src/pages/post/[...slug].md.ts` + `[lang]` mirror, param space `postSourceRoute`). `isPostSourcePublic()` in `src/lib/content/post-source.ts` gates both the endpoint and the breadcrumb `PostMarkdownActions` button — posts with `password` or any `:::encrypted` block never expose source. `postActions:` in `config/site.yaml` controls copy / download / open-in-writing-room (`openInEditor: off | dev | everyone`, requires `editor.enabled`).
 
-**Writing Room**: Public Markdown editor at `/editor` (`src/features/editor/`, enabled by `editor.enabled`; docs in `docs/features/editor.md`). Drafts live in localStorage; `/editor?from=<same-origin .md path>` imports a post as a copy draft (deduped by source). The CMS reuses the same editor for save-to-disk. Article properties edit the YAML in place (including the colophon section, whose dictionary is serialized into the page at build time).
+**Writing Room**: Public Markdown editor at `/editor` (`src/features/editor/`, enabled by `editor.enabled`). Drafts live in localStorage; `/editor?from=<same-origin .md path>` imports a post as a copy draft (deduped by source). Article properties edit the YAML in place (including the colophon section, whose dictionary is serialized into the page at build time). No local CMS workspace in this fork.
 
 ## Component Patterns
 
@@ -288,8 +285,8 @@ const search = url.searchParams.get('q') || '';
 ```typescript
 // ✅ Good: Avoid hydration mismatch
 const isMounted = useIsMounted();
-const isEnabled = useStore(christmasEnabled);
-<div className={cn({ 'z-5': isMounted && isEnabled })} />
+const level = useStore(motionLevel);
+<div className={cn({ 'z-5': isMounted && level === 'lively' })} />
 ```
 
 ## Testing Strategy

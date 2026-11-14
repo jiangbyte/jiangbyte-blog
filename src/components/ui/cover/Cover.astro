@@ -165,7 +165,7 @@ const copyFailedLabel = t(locale, 'common.copyFailed');
     {Astro.isPrerendered && !heroUsesApi && (heroFallback || defaultHeroImage) ? (
       <HeroImage
         alt=""
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover object-top"
         sizes="100vw"
         loading="eager"
         fetchpriority="high"
@@ -174,7 +174,7 @@ const copyFailedLabel = t(locale, 'common.copyFailed');
     ) : heroUsesApi ? (
       <img
         alt=""
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover object-top"
         width="1928"
         height="1080"
         sizes="100vw"
@@ -187,7 +187,7 @@ const copyFailedLabel = t(locale, 'common.copyFailed');
         src={heroFallback || defaultHeroImage}
         srcset={defaultHeroSrcset}
         alt=""
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover object-top"
         width="1928"
         height="1080"
         sizes="100vw"

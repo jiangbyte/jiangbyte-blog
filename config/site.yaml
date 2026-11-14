@@ -4,7 +4,7 @@
 # =============================================================================
 # This file contains all site-specific configurations.
 # Modify this file to customize your blog.
-# After changes, rebuild the site: docker compose up -d --build
+# After changes, restart the dev server or rebuild the site.
 # =============================================================================
 
 # =============================================================================
@@ -279,24 +279,50 @@ announcements:
 # -----------------------------------------------------------------------------
 covers:
   hero:
-    mode: api
+    mode: local
     sessionSticky: true
-    providers:
-      - kind: image
-        url: https://v2.xxapi.cn/api/randomAcgPic?type=pc&return=302
-      - kind: image
-        url: https://app.zichen.zone/api/acg/api.php
+    fallback: /img/site_header_1920.webp
   post:
-    mode: api
+    mode: local
     sessionSticky: true
-    # 无本地兜底：失败只留 LQIP 占位
-    providers:
-      - kind: image
-        url: https://v2.xxapi.cn/api/randomAcgPic?type=pc&return=302&_s={seed}
-      - kind: image
-        url: https://app.zichen.zone/api/acg/api.php?_s={seed}
-
-
+    fallbackList:
+      - /img/cover/1.webp
+      - /img/cover/2.webp
+      - /img/cover/3.webp
+      - /img/cover/4.webp
+      - /img/cover/5.webp
+      - /img/cover/6.webp
+      - /img/cover/7.webp
+      - /img/cover/8.webp
+      - /img/cover/9.webp
+      - /img/cover/10.webp
+      - /img/cover/11.webp
+      - /img/cover/12.webp
+      - /img/cover/13.webp
+      - /img/cover/14.webp
+      - /img/cover/15.webp
+      - /img/cover/16.webp
+      - /img/cover/17.webp
+      - /img/cover/18.webp
+      - /img/cover/19.webp
+      - /img/cover/20.webp
+      - /img/cover/21.webp
+      - /img/cover/22.webp
+      - /img/cover/23.webp
+      - /img/cover/24.webp
+      - /img/cover/25.webp
+      - /img/cover/26.webp
+      - /img/cover/27.webp
+      - /img/cover/28.webp
+      - /img/cover/29.webp
+      - /img/cover/30.webp
+      - /img/cover/31.webp
+      - /img/cover/32.webp
+      - /img/cover/33.webp
+      - /img/cover/34.webp
+      - /img/cover/35.webp
+      - /img/cover/36.webp
+      - /img/cover/37.webp
 
 # =============================================================================
 # Content Processing Options
@@ -360,27 +386,6 @@ motion:
   heroPetals: true
   clickBurst: true
 
-# =============================================================================
-# Moments Archive (optional)
-# 碎碎念动态归档 - 默认关闭；启用时还需配置 KOHARU_SUITE_URL 和 dynamic Docker target
-# =============================================================================
-moments:
-  enabled: false
-  path: moments # 支持嵌套路径，例如 life/moments；不要添加首尾斜线
-  title: 碎碎念
-  description: 记录频道中的日常消息
-  # ogImage: /img/moments-og.png
-  # pathAliases:
-  #   - telegram
-  # channels: # 可省略；省略时按 suite 返回结果展示所有公开频道
-  #   - id: 550e8400-e29b-41d4-a716-446655440000
-  #     slug: daily
-  #     title: 日常
-  #     primary: true
-  #     hidden: false
-  #     ogImage: /img/daily-og.png
-  #     aliases:
-  #       - old-daily
 
 # =============================================================================
 # Writing Room
@@ -550,25 +555,6 @@ navigation:
     path: /about
     icon: fa6-regular:circle-user
 
-# =============================================================================
-# Christmas/Seasonal Features
-# 圣诞/季节性装饰功能 - 节日期间的特殊视觉效果 后续考虑新增 theme.yaml 来管理
-# =============================================================================
-# enabled: 总开关，设为 false 关闭所有节日效果
-# features: 各功能独立开关
-#   snowfall: 飘雪动画效果
-#   christmasColorScheme: 圣诞主题配色
-#   christmasCoverDecoration: 封面圣诞装饰
-#   christmasHat: 头像添加圣诞帽
-#   readingTimeSnow: 阅读时间旁显示雪花图标
-# snowfall: 飘雪效果参数（影响性能，移动端建议降低）
-#   speed: 下落速度 (0-1)，越大越快
-#   intensity: 雪花密度 (0-1)，越大越密
-#   mobileIntensity: 移动端密度，建议低于桌面端
-#   maxLayers: 最大层数，影响立体感
-#   maxIterations: 最大迭代次数，影响雪花数量
-#   mobileMaxLayers: 移动端最大层数
-#   mobileMaxIterations: 移动端最大迭代次数
 
 
 # =============================================================================
@@ -730,18 +716,11 @@ seo:
     # host: true                       # 可选：添加 Host 指令（Yandex）
 
 # =============================================================================
-# Christmas/Seasonal Features
+# BGM
 # =============================================================================
 bgm:
   enabled: false
   audio: []
-
-christmas:
-  enabled: false
-
-# Bangumi 关闭：不配置 userId
-# bangumi:
-#   userId: 
 
 dev:
   localProjectPath: '/home/jiang/workspace/projects/mine/code-guide'

@@ -7,32 +7,21 @@
  */
 
 import { resolveEditorNavigation } from '@lib/config/editor';
-import { normalizeMomentsConfig, resolveMomentsNavigation } from '@lib/config/moments';
 import {
   contentConfig,
   coversConfig,
   editorConfig,
-  enabledLocaleCodes,
   enabledSeriesSlugList,
   featuredSeriesList,
   i18nConfig,
   motionConfig,
   siteConfig,
 } from '@lib/config/site';
-import type {
-  AnalyticsConfig,
-  BangumiConfig,
-  BgmAudioGroup,
-  ChristmasConfig,
-  CommentConfig,
-  DevConfig,
-  RouterItem,
-  SocialConfig,
-} from '@lib/config/types';
+import type { AnalyticsConfig, BgmAudioGroup, CommentConfig, DevConfig, RouterItem, SocialConfig } from '@lib/config/types';
 import { createUmamiStatsConfig } from '@lib/umami-stats';
 import type { UmamiStatsConfig } from '@/types/umami-stats';
 import yamlConfig from '../../config/site.yaml';
-import { DEFAULT_ROUTERS, RESERVED_ROUTES } from './router';
+import { DEFAULT_ROUTERS } from './router';
 
 export { contentConfig, coversConfig, editorConfig, i18nConfig, motionConfig, siteConfig };
 
@@ -87,27 +76,6 @@ export function createArticleStatsConfig(href: string): UmamiStatsConfig | null 
     : null;
 }
 
-// Map YAML christmas config with defaults
-export const christmasConfig: ChristmasConfig = yamlConfig.christmas || {
-  enabled: false,
-  features: {
-    snowfall: true,
-    christmasColorScheme: true,
-    christmasCoverDecoration: true,
-    christmasHat: true,
-    readingTimeSnow: true,
-  },
-  snowfall: {
-    speed: 0.5,
-    intensity: 0.7,
-    mobileIntensity: 0.4,
-    maxLayers: 6,
-    maxIterations: 8,
-    mobileMaxLayers: 4,
-    mobileMaxIterations: 6,
-  },
-};
-
 // Map YAML bgm config
 export const bgmConfig: { enabled: boolean; metingApi?: string; audio: BgmAudioGroup[] } = {
   enabled: yamlConfig.bgm?.enabled ?? (yamlConfig.bgm?.audio?.length ?? 0) > 0,
@@ -115,33 +83,8 @@ export const bgmConfig: { enabled: boolean; metingApi?: string; audio: BgmAudioG
   audio: yamlConfig.bgm?.audio ?? [],
 };
 
-// Bangumi media tracking config — null when disabled (section commented out in YAML)
-export const bangumiConfig: BangumiConfig | null = yamlConfig.bangumi ?? null;
-
-/** Validated opt-in moments configuration. Disabled when the YAML section is absent. */
-export const momentsConfig = normalizeMomentsConfig(yamlConfig.moments, {
-  reservedRoutes: RESERVED_ROUTES,
-  localeCodes: enabledLocaleCodes,
-  seriesSlugs: enabledSeriesSlugList,
-});
-
-const momentsRouters = resolveMomentsNavigation(
-  resolveEditorNavigation(yamlConfig.navigation ?? DEFAULT_ROUTERS, editorConfig),
-  momentsConfig,
-);
-
-// Navigation routers with resolved feature placeholders and auto-injected bangumi entry
-export const routers: RouterItem[] = bangumiConfig
-  ? [
-      ...momentsRouters,
-      {
-        name: bangumiConfig.label,
-        nameKey: bangumiConfig.label ? undefined : 'nav.bangumi',
-        path: '/bangumi',
-        icon: bangumiConfig.icon ?? 'ri:bilibili-fill',
-      },
-    ]
-  : momentsRouters;
+/** Navigation routers with writing-room placeholder resolved */
+export const routers: RouterItem[] = resolveEditorNavigation(yamlConfig.navigation ?? DEFAULT_ROUTERS, editorConfig);
 
 // Map YAML dev tools config with defaults (dev only)
 export const devConfig: DevConfig = {

@@ -67,16 +67,20 @@ function listTarEntries(archivePath: string): string[] {
 }
 
 /**
- * 从 tar.gz 中提取 manifest.json 内容（不解压整个文件）
+ * 从 tar.gz 中提取 manifest.json 内容（不解压整个文件）。
+ * GNU tar 用 `-C dir .` 打包时条目常为 `./manifest.json`，需两种路径都试。
  */
 export function tarExtractManifest(archivePath: string): string | null {
-  const result = spawnSync('tar', ['-xzf', archivePath, '-O', 'manifest.json'], {
-    encoding: 'utf-8',
-    cwd: PROJECT_ROOT,
-    stdio: ['pipe', 'pipe', 'pipe'],
-  });
-  if (result.status === 0 && result.stdout) {
-    return result.stdout;
+  // 1. 依次尝试无前缀与 ./ 前缀，兼容不同 tar 打包写法
+  for (const entry of ['manifest.json', './manifest.json'] as const) {
+    const result = spawnSync('tar', ['-xzf', archivePath, '-O', entry], {
+      encoding: 'utf-8',
+      cwd: PROJECT_ROOT,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    if (result.status === 0 && result.stdout) {
+      return result.stdout;
+    }
   }
   return null;
 }

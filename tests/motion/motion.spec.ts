@@ -333,61 +333,6 @@ test('reduced-motion lightbox navigation, zoom and rotation work without bouncin
   await expect(dialog).toBeHidden();
 });
 
-test('collapsible Moments spoilers preserve hidden focus guards through motion changes', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await gotoReady(page);
-  await page.evaluate(async () => {
-    const bodyScript = '/src/components/moments/MessageBody.astro?astro&type=script&index=0&lang.ts';
-    const cardScript = '/src/components/moments/MessageCard.astro?astro&type=script&index=0&lang.ts';
-    await import(/* @vite-ignore */ bodyScript);
-    await import(/* @vite-ignore */ cardScript);
-    const card = document.createElement('article');
-    card.id = 'motion-moments-fixture';
-    card.className = 'moments-message-card';
-    card.dataset.messageHref = '/this-fixture-must-not-navigate';
-    // Inline sizing isolates the focus lifecycle from the disabled Moments route's scoped stylesheet.
-    const style = document.createElement('style');
-    style.textContent =
-      '#motion-moments-fixture [data-expanded="false"] [data-message-content] { max-height: 384px; overflow: hidden; }';
-    card.append(style);
-    const body = document.createElement('moments-message-body');
-    body.dataset.collapsibleRequested = 'true';
-    body.dataset.expandLabel = 'Expand regression content';
-    body.dataset.collapseLabel = 'Collapse regression content';
-    body.innerHTML =
-      '<div data-message-content data-spoiler-reveal-label="显示隐藏内容"><p style="height:500px">Long content before spoiler</p><spoiler-span id="collapsed-spoiler">Hidden regression secret</spoiler-span></div><button hidden data-message-toggle><span data-message-toggle-label></span></button>';
-    card.append(body);
-    document.body.prepend(card);
-    document.dispatchEvent(new CustomEvent('moments:content-appended', { detail: { root: card } }));
-  });
-  const spoiler = page.locator('#collapsed-spoiler');
-  await expect(page.locator('#motion-moments-fixture moments-message-body')).toHaveAttribute('data-expanded', 'false');
-  await expect(spoiler).toHaveAttribute('inert', '');
-  await expect(spoiler).toHaveAttribute('tabindex', '-1');
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await expect(spoiler).not.toHaveAttribute('data-static-spoiler');
-  await expect(spoiler).toHaveAttribute('inert', '');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(spoiler).toHaveAttribute('data-static-spoiler', '');
-  await expect(spoiler).toHaveAttribute('inert', '');
-  await expect(spoiler).toHaveAttribute('tabindex', '-1');
-  await page.getByRole('button', { name: 'Expand regression content', exact: true }).click();
-  await expect(spoiler).not.toHaveAttribute('inert');
-  await expect(spoiler).toHaveAttribute('tabindex', '0');
-  await spoiler.focus();
-  await spoiler.press('Enter');
-  await expect(spoiler).toHaveAttribute('data-fallback-revealed', 'true');
-  await spoiler.click();
-  await page.waitForTimeout(200);
-  await expect(page).toHaveURL(/:\d+\/$/);
-  await page.getByRole('button', { name: 'Collapse regression content', exact: true }).click();
-  await expect(spoiler).not.toHaveAttribute('inert');
-  await expect(spoiler).not.toHaveAttribute('tabindex');
-  await page.getByRole('button', { name: 'Expand regression content', exact: true }).click();
-  await expect(spoiler).not.toHaveAttribute('inert');
-  await expect(spoiler).not.toHaveAttribute('tabindex');
-});
-
 test('static spoilers preserve rich child nodes and their focus guards across mode changes', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await gotoReady(page);

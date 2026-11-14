@@ -74,13 +74,10 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
   const [split, setSplit] = useState(50);
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
-  const [cms, setCMS] = useState<{ origin: string; postId: string } | null>(null);
-  const [saving, setSaving] = useState(false);
   const [importOffer, setImportOffer] = useState<{ path: string; draft: DraftSummary } | null>(null);
   const [importFailure, setImportFailure] = useState<{ path: string; message: string } | null>(null);
   const [importing, setImporting] = useState(false);
   const importFromBlog = useRef<(path: string) => Promise<void>>(async () => {});
-  const pendingSave = useRef<{ requestId: string; draftId: string; postId: string; source: string } | null>(null);
   const [cursor, setCursor] = useState({ line: 1, column: 1 });
   const editor = useRef<CodeEditorHandle>(null);
   const importInput = useRef<HTMLInputElement>(null);
@@ -125,73 +122,6 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
         setPanel('import');
       } else void importFromBlog.current(path);
     }
-    const receive = (event: MessageEvent) => {
-      if (!import.meta.env.DEV || event.source !== window.parent || window.parent === window) return;
-      if (!URL.canParse(event.origin)) return;
-      const origin = new URL(event.origin);
-      if (!['localhost', '127.0.0.1'].includes(origin.hostname) || origin.port !== '4322') return;
-      if (
-        event.data?.type === 'koharu-cms-open' &&
-        typeof event.data.source === 'string' &&
-        typeof event.data.postId === 'string'
-      ) {
-        pendingSave.current = null;
-        setSaving(false);
-        let restored: EditorDraft | null = null;
-        try {
-          if (typeof event.data.restoreDraftId === 'string')
-            restored =
-              current.current.id === event.data.restoreDraftId
-                ? current.current
-                : readDraft(localStorage, event.data.restoreDraftId);
-        } catch {
-          // A failed restore below preserves the currently visible draft.
-        }
-        if (typeof event.data.restoreDraftId === 'string' && restored?.filename !== event.data.postId) {
-          setCMS(null);
-          setError('无法恢复 CMS 草稿，当前原文已保留。请复制或下载后，从文章列表重新打开文件。');
-          window.parent.postMessage({ type: 'koharu-cms-detach', postId: event.data.postId }, event.origin);
-          return;
-        }
-        const opened =
-          restored && restored.filename === event.data.postId ? restored : createDraft(event.data.source, event.data.postId);
-        editor.current?.saveHistory();
-        setCMS({ origin: event.origin, postId: event.data.postId });
-        current.current = opened;
-        setDraft(opened);
-        try {
-          writeDraft(localStorage, opened);
-          setDrafts(listDrafts(localStorage));
-        } catch {
-          setError('浏览器草稿保存失败，请及时复制或下载；刷新可能丢失未保存的修改。');
-        }
-        setStatus(restored === opened ? '已恢复 CMS 编辑草稿' : '已从 CMS 打开文章');
-        window.parent.postMessage({ type: 'koharu-cms-opened', postId: event.data.postId, draftId: opened.id }, event.origin);
-      }
-      if (event.data?.type === 'koharu-cms-result') {
-        const pending = pendingSave.current;
-        if (
-          !pending ||
-          event.data.requestId !== pending.requestId ||
-          event.data.postId !== pending.postId ||
-          current.current.id !== pending.draftId
-        )
-          return;
-        pendingSave.current = null;
-        setSaving(false);
-        if (typeof event.data.error === 'string' && event.data.error) {
-          setError(event.data.error);
-          setStatus('当前修改尚未保存到博客');
-        } else {
-          setStatus(current.current.source === pending.source ? '已保存到博客文件' : '已保存提交时的版本，后续修改仍待保存。');
-        }
-      }
-    };
-    window.addEventListener('message', receive);
-    // Reloads can change document.referrer to this iframe. Only the non-sensitive ready notice is broadcast;
-    // article messages above still require the local CMS origin and the actual parent window.
-    if (import.meta.env.DEV && window.parent !== window) window.parent.postMessage({ type: 'koharu-editor-ready' }, '*');
-    return () => window.removeEventListener('message', receive);
   }, [ogEndpoint]);
 
   useEffect(() => {
@@ -282,12 +212,6 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
       return false;
     }
   };
-  const detachCMS = () => {
-    if (cms) window.parent.postMessage({ type: 'koharu-cms-detach', postId: cms.postId }, cms.origin);
-    pendingSave.current = null;
-    setCMS(null);
-    setSaving(false);
-  };
   const activate = (value: EditorDraft) => {
     if (value.id === current.current.id) {
       closePanel();
@@ -295,7 +219,6 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
     }
     if (!flushDraft()) return;
     editor.current?.saveHistory();
-    detachCMS();
     setDraft(value);
     setError('');
     closePanel(false);
@@ -399,16 +322,6 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
       }
     }
   };
-  const saveCMS = () => {
-    if (!cms || pendingSave.current) return;
-    const { id: draftId, source } = current.current;
-    const requestId = crypto.randomUUID();
-    pendingSave.current = { requestId, draftId, postId: cms.postId, source };
-    setSaving(true);
-    setStatus('正在保存到博客…');
-    setError('');
-    window.parent.postMessage({ type: 'koharu-cms-save', postId: cms.postId, requestId, source }, cms.origin);
-  };
   const loadExample = async () => {
     const { default: source } = await import('./shoka-example.md?raw');
     activate(createDraft(source, 'shoka-features.md'));
@@ -439,29 +352,15 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
         </a>
         <div className="editor-document-name">
           <strong title={articleTitle}>{articleTitle}</strong>
-          <span className="editor-document-meta" title={cms?.postId}>
-            {cms && <span className="editor-cms-badge">CMS</span>}
-            <output>{status || (cms ? cms.postId : '草稿自动保存在此浏览器')}</output>
+          <span className="editor-document-meta">
+            <output>{status || '草稿自动保存在此浏览器'}</output>
           </span>
         </div>
         <div className="editor-header-actions">
           {action('copy', '复制', (event) => {
             void copy(event.currentTarget);
           })}
-          {action('download', '下载 MD', download, cms ? '' : 'editor-primary')}
-          {cms && (
-            <button
-              type="button"
-              className="editor-button editor-primary"
-              aria-label={saving ? '保存中…' : '保存到博客'}
-              title="保存到博客"
-              onClick={saveCMS}
-              disabled={saving}
-            >
-              <EditorIcon name="save" />
-              <span>{saving ? '保存中…' : '保存到博客'}</span>
-            </button>
-          )}
+          {action('download', '下载 MD', download, 'editor-primary')}
         </div>
       </header>
       <div className="editor-toolbar">
@@ -759,7 +658,6 @@ export default function Editor({ ogEndpoint = '/api/editor/og', colophon = [] }:
                                 }
                                 setDrafts(listDrafts(localStorage));
                                 if (entry.id === draft.id) {
-                                  detachCMS();
                                   setError('');
                                   setDraft(createDraft());
                                 }

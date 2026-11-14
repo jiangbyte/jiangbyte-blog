@@ -237,51 +237,13 @@ export interface RouterItem {
   path?: string;
   icon?: string;
   /** Build-time feature placeholder. The item is replaced or removed before rendering. */
-  feature?: 'moments';
   /** Keep this link on its canonical path instead of adding a locale prefix. */
   localeIndependent?: boolean;
   children?: RouterItem[];
 }
 
 // =============================================================================
-// Moments Archive
-// =============================================================================
 
-export interface MomentsChannelConfig {
-  /** Stable suite channel UUID used to match the public channel response. */
-  id: string;
-  /** Stable public URL segment. Falls back to Telegram username, then the suite UUID. */
-  slug?: string;
-  /** Blog-only display title override. */
-  title?: string;
-  /** Prefer this channel on the global moments index. At most one channel may be primary. */
-  primary?: boolean;
-  /** Hide this channel from every public moments surface without stopping suite collection. */
-  hidden?: boolean;
-  /** Channel-specific Open Graph image. */
-  ogImage?: string;
-  /** Explicit legacy URL segments that redirect to the canonical channel slug. */
-  aliases?: string[];
-}
-
-export interface MomentsConfig {
-  /** Opt-in switch. Defaults to false. */
-  enabled?: boolean;
-  /** Canonical route prefix without leading/trailing slashes. Defaults to `moments`. */
-  path?: string;
-  /** Page and navigation title. Defaults to `碎碎念`. */
-  title?: string;
-  /** Page and feed description. */
-  description?: string;
-  /** Global moments Open Graph image. */
-  ogImage?: string;
-  /** Explicit legacy route prefixes that redirect to `path`. */
-  pathAliases?: string[];
-  /** Optional channel overrides. Unconfigured public channels are appended. */
-  channels?: MomentsChannelConfig[];
-}
-
-// =============================================================================
 // Comment Configuration
 // =============================================================================
 
@@ -572,32 +534,6 @@ export interface SeoConfig {
 }
 
 // =============================================================================
-// Christmas/Seasonal Features
-// =============================================================================
-
-export interface ChristmasFeatures {
-  snowfall: boolean;
-  christmasColorScheme: boolean;
-  christmasCoverDecoration: boolean;
-  christmasHat: boolean;
-  readingTimeSnow: boolean;
-}
-
-export interface SnowfallConfig {
-  speed: number;
-  intensity: number;
-  mobileIntensity: number;
-  maxLayers: number;
-  maxIterations: number;
-  mobileMaxLayers: number;
-  mobileMaxIterations: number;
-}
-
-export interface ChristmasConfig {
-  enabled: boolean;
-  features: ChristmasFeatures;
-  snowfall: SnowfallConfig;
-}
 
 // =============================================================================
 // Dev Tools Configuration (Dev Only - Local Editor Integration)
@@ -646,17 +582,6 @@ export interface BgmConfig {
 }
 
 // =============================================================================
-// Bangumi (Media Tracking) Configuration
-// =============================================================================
-
-export interface BangumiConfig {
-  /** Bangumi username or numeric ID */
-  userId: string;
-  /** Navigation display name, defaults to i18n key 'nav.bangumi' */
-  label?: string;
-  /** Navigation icon (Iconify format), defaults to 'ri:bilibili-fill' */
-  icon?: string;
-}
 
 // =============================================================================
 // i18n Configuration
@@ -749,8 +674,6 @@ export interface SiteYamlConfig {
   content?: ContentConfig;
   /** Motion intensity default and decorative sakura effects. */
   motion?: MotionConfig;
-  /** Optional dynamic moments archive backed by koharu-suite. */
-  moments?: MomentsConfig;
   /** Optional public Markdown writing room. */
   editor?: WritingRoomConfig;
   /** Post marks dictionary (落款); validated by normalizeColophonConfig. */
@@ -765,9 +688,6 @@ export interface SiteYamlConfig {
   categoryMap?: Record<string, string>; // TODO: i18n, now use eg: { '随笔': 'life' }
   /** Background music player configuration */
   bgm?: BgmConfig;
-  /** Bangumi media tracking page — comment out to disable */
-  bangumi?: BangumiConfig;
-  christmas?: ChristmasConfig;
   /** Development tools configuration (dev only) */
   dev?: DevConfig;
   /** Internationalization configuration */

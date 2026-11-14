@@ -110,7 +110,7 @@
       if (!field || !this.isConnected) return;
       const onScreen = this.visible && document.visibilityState === 'visible';
       const level = readMotionLevel();
-      const allowed = this.ready && level === 'lively' && !document.documentElement.classList.contains('christmas');
+      const allowed = this.ready && level === 'lively';
       this.classList.toggle('is-active', allowed);
       window.clearTimeout(this.stopTimer);
       if (allowed && onScreen) {

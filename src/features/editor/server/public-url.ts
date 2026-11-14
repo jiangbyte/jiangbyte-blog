@@ -32,7 +32,7 @@ export function withAbort<T>(promise: Promise<T>, signal: AbortSignal): Promise<
   });
 }
 
-// Public-address policy shared with the CMS fetcher; validate every DNS answer and redirect.
+// Public-address policy for OG/link preview fetches; validate every DNS answer and redirect.
 const NON_PUBLIC_IPV4_RANGES: ReadonlyArray<readonly [network: number, prefixLength: number]> = [
   [0x00000000, 8], // Unspecified and current network
   [0x0a000000, 8], // Private network

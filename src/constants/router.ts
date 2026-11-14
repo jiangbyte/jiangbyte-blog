@@ -13,7 +13,6 @@ export enum Routes {
   Friends = '/friends',
   Post = '/post',
   Archives = '/archives',
-  Bangumi = '/bangumi',
 }
 
 /**

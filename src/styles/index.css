@@ -3,7 +3,6 @@
 @import "./theme/shadcn.css";
 @import "./theme/index.css";
 @import "./theme/theme-transition.css";
-@import "./christmas/christmas-theme.css";
 @import "./global/animate.css";
 @import "./global/motion.css";
 @import "./global/tailwind.css";
@@ -30,7 +29,6 @@
 @import "./components/index-archives.css";
 @import "./components/category-toc.css";
 @import "./components/tag-cloud.css";
-@import "./components/bangumi.css";
 @import "./components/post.css";
 @import "./components/colophon.css";
 @import "./components/toc.css";

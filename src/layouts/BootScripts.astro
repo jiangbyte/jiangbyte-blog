@@ -7,7 +7,7 @@
  * head parsing. Treat them as frozen: any deferral or refactor reintroduces FOUC.
  */
 
-import { christmasConfig, motionConfig } from '@constants/site-config';
+import { motionConfig } from '@constants/site-config';
 import { MOTION_LEVELS } from '@lib/config/motion';
 import {
   FONT_PRESETS,
@@ -58,20 +58,6 @@ import {
     document.addEventListener('astro:after-swap', function() {
       applyTheme(getTheme());
     });
-  })();
-</script>
-<script is:inline define:vars={{ christmasFeatureEnabled: christmasConfig.enabled }}>
-  // 立即执行圣诞状态检查 否则彩灯等会闪烁
-  (function () {
-    // 如果构建时配置关闭，则始终不启用
-    if (!christmasFeatureEnabled) {
-      document.documentElement.classList.remove('christmas');
-      return;
-    }
-    // 否则使用用户偏好
-    var stored = localStorage.getItem('christmas-enabled');
-    var enabled = stored !== 'false'; // 默认启用
-    document.documentElement.classList.toggle('christmas', enabled);
   })();
 </script>
 

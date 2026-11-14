@@ -45,7 +45,7 @@ function sendJson(res: ServerResponse, status: number, data: object) {
   res.end(JSON.stringify(data));
 }
 
-/** Returns false for other routes, allowing dev/CMS middleware to continue. */
+/** Returns false for other routes so Astro can continue handling them. */
 export function createEditorOGHandler(options: EditorOGHandlerOptions = {}) {
   const fetchOG = options.fetchOG ?? fetchEditorOG;
   const now = options.now ?? Date.now;

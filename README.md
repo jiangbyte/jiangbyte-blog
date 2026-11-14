@@ -4,16 +4,17 @@
 
 **摸鱼猫泡泡**
 
-Astro + [astro-koharu](https://github.com/cosZone/astro-koharu) · 记录 Java、工具与工程实践
+Astro + [astro-koharu](https://github.com/cosZone/astro-koharu) fork · 记录工具与工程实践
 
 [![Astro](https://img.shields.io/badge/Astro-7-BC52EE?logo=astro&logoColor=white)](https://astro.build/)
-[![Theme](https://img.shields.io/badge/Theme-astro--koharu-ed788b)](https://github.com/cosZone/astro-koharu)
 [![Site](https://img.shields.io/badge/Site-jiangbyte.cn-0A66C2)](https://jiangbyte.cn)
 [![License: AGPL-3.0](https://img.shields.io/badge/Code-AGPL--3.0-blue.svg)](./LICENSE)
 
 </div>
 
-摸鱼猫泡泡源码，在线阅读：[jiangbyte.cn](https://jiangbyte.cn)
+个人站点源码，在线阅读：[jiangbyte.cn](https://jiangbyte.cn)
+
+本仓基于 astro-koharu 深度定制，**不再跟随** `pnpm koharu update`。日常改站点以配置与文章为主。
 
 ---
 
@@ -21,11 +22,8 @@ Astro + [astro-koharu](https://github.com/cosZone/astro-koharu) · 记录 Java�
 
 | 分支 | 说明 |
 |------|------|
-| `koharu` / `main` | 当前站点（astro-koharu） |
-| `archive/vuepress` | 旧 VuePress + Theme Hope 站归档，只读 |
-
-主题上游：`upstream` → `git@github.com:cosZone/astro-koharu.git`  
-更新主题：`pnpm koharu update`（详见上游 GETTING-STARTED）
+| `main` | 当前站点（astro-koharu 定制） |
+| `vuepress2` | 旧 VuePress + Theme Hope 站归档 |
 
 ## 环境
 
@@ -36,15 +34,15 @@ Astro + [astro-koharu](https://github.com/cosZone/astro-koharu) · 记录 Java�
 
 ```bash
 pnpm install
-pnpm dev       # http://localhost:4321
-pnpm build     # 产出 dist/
+pnpm dev           # http://localhost:4321
+pnpm build         # 产出 dist/
 pnpm preview
-pnpm run deploy    # 构建并 rsync 到 nginx（需本机 SSH Host；勿用 pnpm deploy，那是 pnpm 内置命令）
+pnpm run deploy    # 构建并 rsync 到 nginx（需本机 SSH Host；勿用 pnpm deploy）
 ```
 
-站点配置：[`config/site.yaml`](./config/site.yaml)  
-文章目录：`src/content/blog/`  
-从旧站再导入：`node scripts/migrate-from-vuepress.mjs <docs导出目录>`
+- 站点配置：[`config/site.yaml`](./config/site.yaml)
+- 文章目录：`src/content/blog/`
+- 写作室：`/editor`（需 `editor.enabled: true`）
 
 ## 许可证
 

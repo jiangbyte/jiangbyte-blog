@@ -2,12 +2,11 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { unified } from '@astrojs/markdown-remark';
-import node from '@astrojs/node';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import yaml from '@rollup/plugin-yaml';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig, memoryCache } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import robotsTxt from 'astro-robots-txt';
@@ -21,12 +20,10 @@ import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import YAML from 'yaml';
 import { editorIntegration } from './src/features/editor/integration.ts';
-import { momentsRoutes } from './src/features/moments/integration/momentsRoutes.ts';
 import { normalizeContentConfig } from './src/lib/config/content.ts';
 import { normalizeEditorConfig } from './src/lib/config/editor.ts';
-import { enabledFeaturedSeriesSlugs, normalizeFeaturedSeries } from './src/lib/config/featured-series.ts';
+import { normalizeFeaturedSeries } from './src/lib/config/featured-series.ts';
 import { BUNDLED_ICON_SETS } from './src/lib/config/icon-sets.ts';
-import { normalizeMomentsConfig } from './src/lib/config/moments.ts';
 import { RESERVED_ROUTES } from './src/lib/config/reserved-routes.ts';
 import { lazyMermaid } from './src/lib/markdown/lazy-mermaid.ts';
 import { mermaidThemeCSS } from './src/lib/markdown/mermaid-theme.ts';
@@ -73,72 +70,11 @@ const enabledI18nLocales = (i18nYaml?.locales ?? [{ code: 'zh' }])
   .filter((locale) => locale.enabled !== false)
   .map((locale) => locale.code);
 
-const featuredSeries = normalizeFeaturedSeries(yamlConfig.featuredSeries, {
+// Validate featuredSeries against reserved routes at config load time.
+normalizeFeaturedSeries(yamlConfig.featuredSeries, {
   categoryMap: yamlConfig.categoryMap,
   reservedRoutes: RESERVED_ROUTES,
 });
-const momentsConfig = normalizeMomentsConfig(yamlConfig.moments, {
-  reservedRoutes: RESERVED_ROUTES,
-  localeCodes: enabledI18nLocales,
-  seriesSlugs: enabledFeaturedSeriesSlugs(featuredSeries),
-});
-
-function assertMomentsOgImage(image, field) {
-  if (!image?.startsWith('/')) return;
-  const publicFile = path.join(process.cwd(), 'public', image.slice(1));
-  if (!fs.existsSync(publicFile) || !fs.statSync(publicFile).isFile()) {
-    throw new Error(`Moments configuration error: "${field}" does not exist in public: ${image}`);
-  }
-}
-
-if (momentsConfig.enabled) {
-  assertMomentsOgImage(momentsConfig.ogImage, 'ogImage');
-  for (const [index, channel] of momentsConfig.channels.entries()) {
-    assertMomentsOgImage(channel.ogImage, `channels[${index}].ogImage`);
-  }
-  const suiteUrl = env.KOHARU_SUITE_URL;
-  if (!suiteUrl) throw new Error('KOHARU_SUITE_URL is required when moments.enabled is true.');
-  const parsedSuiteUrl = new URL(suiteUrl);
-  if (
-    !['http:', 'https:'].includes(parsedSuiteUrl.protocol) ||
-    parsedSuiteUrl.username ||
-    parsedSuiteUrl.password ||
-    parsedSuiteUrl.pathname !== '/' ||
-    parsedSuiteUrl.search ||
-    parsedSuiteUrl.hash
-  ) {
-    throw new Error('KOHARU_SUITE_URL must be an HTTP(S) origin without credentials, query, or fragment.');
-  }
-}
-
-/**
- * Vite plugin for conditional Three.js bundling
- * When christmas snowfall is disabled, replaces SnowfallCanvas with a noop component
- * This saves ~879KB from the bundle
- */
-function conditionalSnowfall() {
-  const VIRTUAL_ID = 'virtual:snowfall-canvas';
-  const RESOLVED_ID = `\0${VIRTUAL_ID}`;
-  const christmas = yamlConfig.christmas || { enabled: false, features: {} };
-  const isEnabled = christmas.enabled && christmas.features?.snowfall;
-
-  return {
-    name: 'conditional-snowfall',
-    resolveId(id) {
-      if (id === VIRTUAL_ID) return RESOLVED_ID;
-      // Redirect the alias import to virtual module when disabled
-      if (!isEnabled && id === '@components/christmas/SnowfallCanvas') {
-        return RESOLVED_ID;
-      }
-    },
-    load(id) {
-      if (id === RESOLVED_ID) {
-        // Return noop component when christmas is disabled
-        return 'export function SnowfallCanvas() { return null; }';
-      }
-    },
-  };
-}
 
 // Build conditional plugin lists based on content config
 const contentConfig = normalizeContentConfig(yamlConfig.content);
@@ -264,14 +200,7 @@ export default defineConfig({
       mermaidConfig: { themeCSS: mermaidThemeCSS },
     }),
     robotsTxt(robotsConfig || {}),
-    ...(momentsConfig.enabled ? [momentsRoutes(momentsConfig)] : []),
   ],
-  ...(momentsConfig.enabled
-    ? {
-        adapter: node({ mode: 'standalone' }),
-        cache: { provider: memoryCache({ max: 1000 }) },
-      }
-    : {}),
   devToolbar: {
     enabled: true,
   },
@@ -310,7 +239,7 @@ export default defineConfig({
       // reject, dropping every scroll-driven animation. Minify for Tailwind v4's browser floor.
       cssTarget: ['chrome111', 'edge111', 'firefox128', 'safari16.4'],
     },
-    plugins: [...(isAnalyze ? [Sonda({ open: false })] : []), yaml(), conditionalSnowfall(), svgr(), tailwindcss()],
+    plugins: [...(isAnalyze ? [Sonda({ open: false })] : []), yaml(), svgr(), tailwindcss()],
     resolve: {
       alias: {
         'hast-util-from-html-isomorphic': katexHtmlParser,

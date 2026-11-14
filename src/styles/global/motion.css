@@ -143,11 +143,6 @@ html.motion-off .cat-404 :is(.face-features, .digit-0-bg) {
   opacity: 0;
 }
 
-html.motion-off [data-moments-entering] {
-  opacity: 1;
-  transform: none;
-}
-
 html.motion-off::view-transition-group(*),
 html.motion-off::view-transition-old(*),
 html.motion-off::view-transition-new(*),

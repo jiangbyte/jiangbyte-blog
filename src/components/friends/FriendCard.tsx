@@ -1,14 +1,11 @@
 import { LazyMotionProvider } from '@components/common/LazyMotionProvider';
 import { microDampingPreset } from '@constants/anim/spring';
 import type { FriendLink } from '@constants/friends-config';
-import { useIsMounted } from '@hooks/useIsMounted';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useMotionLevel } from '@hooks/useMotionLevel';
-import { useStore } from '@nanostores/react';
 import { m, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { type MouseEvent, useEffect, useRef } from 'react';
 import { cn, normalizeHexColor } from '@/lib/utils';
-import { christmasEnabled } from '@/store/christmas';
 
 interface FriendCardProps {
   friend: FriendLink;
@@ -35,8 +32,6 @@ const DEFAULT_AVATAR = `data:image/svg+xml;utf8,${encodeURIComponent(`
 
 export default function FriendCard({ friend, index }: FriendCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null);
-  const isMounted = useIsMounted();
-  const isChristmasEnabled = useStore(christmasEnabled);
   const shouldReduceMotion = useMotionLevel() === 'reduced';
   const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
   const tiltEnabled = !shouldReduceMotion && canHover;
@@ -97,7 +92,6 @@ export default function FriendCard({ friend, index }: FriendCardProps) {
         ref={cardRef}
         className={cn(
           'friend-card group !no-underline hover:!no-underline relative block h-[200px] w-full cursor-pointer select-none transition-transform duration-300 ease-easeOut',
-          { 'z-5': isMounted && isChristmasEnabled },
         )}
         style={{ perspective: '1000px' }}
         transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.05, ...microDampingPreset }}

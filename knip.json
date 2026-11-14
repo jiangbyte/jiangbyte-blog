@@ -2,12 +2,7 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "workspaces": {
     ".": {
-      "entry": [
-        "src/lib/markdown/client-content.ts",
-        "src/lib/client-panel.ts",
-        "docs/design/readme-showcase/record.mjs",
-        "docs/design/readme-feature-overview/render.mjs"
-      ]
+      "entry": ["src/lib/markdown/client-content.ts", "src/lib/client-panel.ts"]
     }
   },
   "ignoreExportsUsedInFile": {
