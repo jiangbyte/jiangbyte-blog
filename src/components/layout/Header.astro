@@ -25,11 +25,11 @@ const brandText = title || alternate || '';
 >
   <div class={`header-inner mx-auto tablet:w-full px-6 tablet:pl-0 tablet:pr-3 ${MAX_WIDTH.content}`}>
     <div class="header-capsule" aria-hidden="true"></div>
-    <div class="header-content tablet:grid tablet:grid-cols-[minmax(3rem,1fr)_auto_1fr] tablet:gap-x-3 flex items-center justify-between">
+    <div class="header-content tablet:grid tablet:grid-cols-[minmax(3rem,1fr)_auto_1fr] tablet:gap-x-4 flex items-center justify-between gap-x-2">
       <!-- Desktop: Always show logo -->
       <a
         transition:persist="page-header-avatar"
-        class="site-logo tablet:hidden -my-4 mr-4 flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap"
+        class="site-logo tablet:hidden -my-4 mr-6 flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap"
         href="/"
         target="_self"
         title={brandText}
