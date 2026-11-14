@@ -8,7 +8,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 # 可通过环境变量覆盖，例如：
-#   DEPLOY_SSH_HOST=myserver DEPLOY_REMOTE_DIR=/var/www/html pnpm deploy
+#   DEPLOY_SSH_HOST=myserver DEPLOY_REMOTE_DIR=/var/www/html pnpm run deploy
 SSH_HOST="${DEPLOY_SSH_HOST:-jiangbyte}"
 REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/opt/nginx-gateway/html}"
 DIST_DIR="${DEPLOY_DIST_DIR:-dist}"

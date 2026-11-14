@@ -39,7 +39,7 @@ pnpm install
 pnpm dev       # http://localhost:4321
 pnpm build     # 产出 dist/
 pnpm preview
-pnpm deploy    # 构建并 rsync 到 nginx（需本机 SSH Host）
+pnpm run deploy    # 构建并 rsync 到 nginx（需本机 SSH Host；勿用 pnpm deploy，那是 pnpm 内置命令）
 ```
 
 站点配置：[`config/site.yaml`](./config/site.yaml)  
