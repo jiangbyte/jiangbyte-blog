@@ -73,7 +73,7 @@ const startYear = siteConfig?.startYear ?? currentYear;
       </p>
 
       {(icpConfig || policeConfig) && (
-        <p class="text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 opacity-80">
+        <p class="text-muted-foreground/80 flex flex-col items-center gap-y-1 opacity-80 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-2">
           {icpConfig && (
             icpConfig.link ? (
               <a href={icpConfig.link} target="_blank" rel="noopener noreferrer" class="footer-link font-medium">
@@ -83,7 +83,7 @@ const startYear = siteConfig?.startYear ?? currentYear;
               <span>{icpConfig.text}</span>
             )
           )}
-          {icpConfig && policeConfig && <span class="opacity-40" aria-hidden="true">|</span>}
+          {icpConfig && policeConfig && <span class="hidden opacity-40 sm:inline" aria-hidden="true">|</span>}
           {policeConfig && (
             policeConfig.link ? (
               <a

@@ -15,11 +15,11 @@ function SearchIcon({ className }: { className?: string }) {
   );
 }
 
-export function SearchTrigger({ className }: { className?: string }) {
+export function SearchTrigger({ className, locale }: { className?: string; locale?: string }) {
   const isMounted = useIsMounted();
-  const { t } = useTranslation();
+  const { t } = useTranslation(locale);
 
-  // Only compute platform-specific shortcut after mount to avoid hydration mismatch
+  // 快捷键依赖 UA，挂载后再算 title，避免水合不一致
   const title = useMemo(() => {
     if (!isMounted) return undefined;
     const platform = navigator.userAgentData?.platform || navigator.userAgent;

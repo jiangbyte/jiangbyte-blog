@@ -109,7 +109,8 @@ export default function ThemeToggle({ className, locale }: ThemeToggleProps) {
       )}
       aria-label={label}
       aria-pressed={isMounted ? isDark : undefined}
-      title={label}
+      // title 挂载后再写，避免 SSR/水合阶段空串与文案不一致
+      title={isMounted ? label : undefined}
       type="button"
       onClick={(event) => toggle(event.currentTarget)}
     >
