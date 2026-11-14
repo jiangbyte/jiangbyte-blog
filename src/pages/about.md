@@ -52,10 +52,10 @@ Hi，我是 **Charlie**。
 
 ### 技术栈
 
-- **语言**：Java、Python、Go
+- **语言**：Java、Python、Go、.NET
 - **后端**：Spring Boot / Cloud、MyBatis-Plus、FastAPI；JUC、JVM 基础
 - **数据**：MySQL、Redis；对象存储、消息队列
-- **前端**：TypeScript、Vue3、Vite、Pinia
+- **前端**：TypeScript、Vue3、Vite、Pinia、uni-app
 - **工程**：Docker / Compose、Git、Jenkins；需求 → 设计 → 实现 → 发布
 - **AI**：
   - 工具：Cursor、Codex、Workbuddy
