@@ -1,7 +1,6 @@
 ---
 title: M3U8 Downloader
 date: '2026-09-18'
-link: m3u8-downloader
 description: 跨平台桌面端 m3u8 多线程下载器
 tags:
   - Tauri

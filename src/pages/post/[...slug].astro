@@ -164,20 +164,21 @@ const localEditors =
 let summaryText: string | null = null;
 let summarySource: SummarySource | null = null;
 
-if (post.data.description) {
-  // 优先使用手写描述
-  summaryText = post.data.description;
-  summarySource = 'description';
-} else {
-  // 尝试获取 AI 摘要
-  const aiSummary = getPostSummary(postSlug);
-  if (aiSummary) {
-    summaryText = aiSummary;
-    summarySource = 'ai';
+{
+  // description 可选：无则 AI 摘要 / 正文摘录
+  const manual = post.data.description?.trim();
+  if (manual) {
+    summaryText = manual;
+    summarySource = 'description';
   } else {
-    // 降级到自动提取
-    summaryText = extractTextFromMarkdown(post.body ?? '', 200);
-    summarySource = 'auto';
+    const aiSummary = getPostSummary(postSlug);
+    if (aiSummary) {
+      summaryText = aiSummary;
+      summarySource = 'ai';
+    } else {
+      summaryText = extractTextFromMarkdown(post.body ?? '', 200);
+      summarySource = 'auto';
+    }
   }
 }
 ---

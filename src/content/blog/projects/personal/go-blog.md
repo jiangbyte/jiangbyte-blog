@@ -1,7 +1,6 @@
 ---
 title: go-blog
 date: '2026-10-28'
-link: go-blog
 description: 个人博客全栈系统：Go（Gin + GORM）+ Vue 前台 / 管理端 / 简历站。
 tags:
   - Go

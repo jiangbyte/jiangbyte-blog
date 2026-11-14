@@ -1,7 +1,6 @@
 ---
 title: VMware Workstation Pro 26H1 安装
 date: '2026-10-01'
-link: vmware-workstation-pro-26h1-an-zhuang
 description: 本文按 2026-06-19 时点可获取的 26H1 免费版 流程整理，主要记录 Windows 宿主机上的下载和安装步骤。
 tags:
   - VMware

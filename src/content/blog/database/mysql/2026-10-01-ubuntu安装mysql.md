@@ -1,7 +1,6 @@
 ---
 title: ubuntu安装mysql
 date: '2026-10-01'
-link: ubuntuan-zhuang-mysql
 description: Ubuntu 的 APT 源里自带 MySQL，装起来比 CentOS 省心不少。不过默认版本可能不是最新的，想指定版本或者用官方最新版也有办法。
 tags:
   - 数据库

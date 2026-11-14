@@ -1,7 +1,6 @@
 ---
 title: Voxel
 date: '2026-10-01'
-link: voxel
 description: Portal / Admin 分仓的 DDD 七层全栈脚手架系列
 tags:
   - DDD

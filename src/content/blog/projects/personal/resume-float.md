@@ -1,7 +1,6 @@
 ---
 title: ResumeFloat
 date: '2026-09-18'
-link: resume-float
 description: 跨平台置顶悬浮简历速拷工具
 tags:
   - Tauri

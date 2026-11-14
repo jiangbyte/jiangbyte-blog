@@ -1,7 +1,6 @@
 ---
 title: Debian XFCE 换 GDM 登录页与用户头像
 date: '2026-10-01'
-link: debian-xfce-huan-gdm-deng-lu-ye-yu-yong-hu-tou-xiang
 description: 机器：Debian 13（trixie）+ XFCE，原先用 LightDM + lightdm-gtk-greeter。
 tags:
   - 运维
@@ -28,7 +27,6 @@ categories:
 桌面侧其它整理可对照：[Debian 13 XFCE 开发机整理：熄屏、软件源、全局菜单与防火墙](./2026-10-01-Debian 13 XFCE 开发机整理：熄屏、软件源、全局菜单与防火墙.md)。
 
 ---
-
 ## 先备份
 
 ```bash

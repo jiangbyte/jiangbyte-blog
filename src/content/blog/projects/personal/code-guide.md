@@ -1,7 +1,6 @@
 ---
 title: code-guide
 date: '2026-10-28'
-link: code-guide
 description: 摸鱼猫泡泡 · Astro Koharu 站点。
 tags:
   - Astro
@@ -10,7 +9,6 @@ tags:
 categories:
   - 项目
 ---
-
 - 仓库：<https://github.com/jiangbyte/code-guide>
 - 主页：<https://jiangbyte.cn>
 

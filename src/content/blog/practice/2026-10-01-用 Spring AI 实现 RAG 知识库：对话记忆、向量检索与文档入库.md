@@ -1,8 +1,6 @@
 ---
 title: 用 Spring AI 实现 RAG 知识库：对话记忆、向量检索与文档入库
 date: '2026-10-01'
-link: >-
-  yong-spring-ai-shi-xian-rag-zhi-shi-ku-dui-hua-ji-yi-xiang-liang-jian-suo-yu-wen-dang-ru-ku
 description: >-
   最近用 Spring AI 做了一套 RAG 知识库对话：后台管理多知识库和文件上传，对话侧支持会话记忆、按知识库过滤检索，以及 SSE
   流式输出。骨架还是原来的 DDD-lite Spring Boot 分层。
@@ -354,7 +352,6 @@ vectorStore.delete(expression);
 ---------------------
 {question_answer_context}
 ---------------------
-
 规则：
 1. 片段相关则优先依据片段作答，不编造。
 2. 片段为空/不相关，或问题是问候、自我介绍、闲聊、记名字等，结合历史正常回答，

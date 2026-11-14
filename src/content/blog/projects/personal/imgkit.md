@@ -1,7 +1,6 @@
 ---
 title: imgkit
 date: '2026-10-30'
-link: imgkit
 description: 即时、无落盘图像处理：Favicon / 压缩 / 缩放 / 格式转换，FastAPI + Vue3 单进程。
 tags:
   - Python

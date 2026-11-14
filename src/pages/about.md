@@ -50,6 +50,10 @@ Hi，我是 **Charlie**。
 - **多语言词法解析**：以策略模式与工厂模式管理各语言解析器；通过 ThreadLocal 隔离请求资源，ConcurrentHashMap 复用解析对象，降低并发竞争。
 - **智能辅导**：基于 Spring AI + RAG 接入题目 / 规则文档，自定义 Tools 完成题目查询与代码分析，并按会话生成结构化学习反馈报告。
 
+### 个人项目
+
+业余会做一些开源与自用工具，站内汇总见 [项目集](/projects)；代码托管在 GitHub 组织 [jiangfolio](https://github.com/jiangfolio)（个人名下组织，非公司主体）。
+
 ### 技术栈
 
 - **语言**：Java、Python、Go、.NET

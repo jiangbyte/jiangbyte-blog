@@ -16,14 +16,12 @@ description: 帮助用户按照 astro-koharu 博客的规范创建新博文。�
    - 文章分类（从下面的分类列表中选择）
    - 文章主题/关键词（用于生成标签和描述）
 
-2. **生成 frontmatter**：
+2. **生成 frontmatter**（不要写 `link`；`description` 可选——不写时列表/摘要会从正文自动摘约三行；站点已开启 `enableSlugTransliteration`，URL 由文件名自动转拼音/英文）：
    ```yaml
    ---
    title: [文章标题]
-   link: [URL slug，使用英文短横线分隔]
    catalog: true
    date: [当前日期时间，格式：YYYY-MM-DD HH:mm:ss]
-   description: [一句话描述文章内容，50-100字]
    tags:
      - [相关标签1]
      - [相关标签2]
@@ -32,6 +30,7 @@ description: 帮助用户按照 astro-koharu 博客的规范创建新博文。�
      - [一级分类, 二级分类]
    ---
    ```
+   可选：需要固定文案时再加 `description: [一句话]`。
 
    **分类格式说明**：
    - 嵌套分类使用数组格式：`- [一级分类, 二级分类]`
@@ -41,7 +40,7 @@ description: 帮助用户按照 astro-koharu 博客的规范创建新博文。�
 3. **确定文件路径**：
    - 基础路径：`src/content/blog/`
    - 根据分类生成对应的子目录结构
-   - 文件名：使用 `link` 字段值 + `.md` 扩展名
+   - 文件名：`YYYY-MM-DD-标题.md`（可用中文标题；公开 URL 会自动罗马化）
 
 4. **生成 Markdown 内容框架**：
    - 提供文章结构建议（引言、正文章节、总结等）

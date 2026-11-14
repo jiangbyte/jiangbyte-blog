@@ -1,7 +1,6 @@
 ---
 title: Debian中国源安装Docker
 date: '2026-10-01'
-link: debianzhong-guo-yuan-an-zhuang-docker
 description: 已配好 Debian 软件源（见 02 配置 Debian 软件源） 确认代号：
 tags:
   - 运维

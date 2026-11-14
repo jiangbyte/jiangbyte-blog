@@ -1,7 +1,6 @@
 ---
 title: Debian 安装 STM32CubeCLT 与 STM32CubeMX
 date: '2026-10-31'
-link: debianan-zhuang-stm32cubecltyu-stm32cubemx
 description: >-
   在 Debian 13 上从 ST 官方 Linux 包安装 CubeCLT 1.22 与 CubeMX 6.11：解压、接受许可、静默安装、配
   PATH，并用 ST-LINK 验证。

@@ -24,6 +24,8 @@ site:
   defaultOgImage: /img/avatar.webp
   startYear: 2026
   timezone: Asia/Shanghai
+  # 无 link 时，用文件名 slug 转拼音/英文作为文章 URL
+  enableSlugTransliteration: true
   keywords:
     - 摸鱼猫泡泡
     - Charlie

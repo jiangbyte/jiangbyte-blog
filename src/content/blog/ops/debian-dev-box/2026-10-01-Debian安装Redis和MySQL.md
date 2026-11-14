@@ -1,7 +1,6 @@
 ---
 title: Debian安装Redis和MySQL
 date: '2026-10-01'
-link: debianan-zhuang-redishe-mysql
 description: 本文要装的是 Oracle MySQL 和 Redis，不是 MariaDB。
 tags:
   - 运维
@@ -31,7 +30,6 @@ Debian 自带仓库里的 `default-mysql-server` 实际会装成 **MariaDB**，*
 - 走 Docker 时还需 [Debian 中国源安装 Docker](./2026-10-01-Debian中国源安装Docker.md)
 
 ---
-
 ## 方式 A：软件源安装（含密码配置）
 
 ### 先清掉可能装过的 MariaDB（如有）

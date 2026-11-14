@@ -1,7 +1,6 @@
 ---
 title: plus-ui
 date: '2026-09-30'
-link: plus-ui
 description: RuoYi-Vue-Plus 官方前端 plus-ui 的 Fork：扁平直角 UI 与交互微调，定期合并上游。
 tags:
   - Vue

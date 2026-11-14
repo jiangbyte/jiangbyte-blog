@@ -1,7 +1,6 @@
 ---
 title: XFCE AppMenu 居中与 Expand 被写回
 date: '2026-10-01'
-link: xfce-appmenu-ju-zhong-yu-expand-bei-xie-hui
 description: 顶栏装了 AppMenu Plugin 之后：
 tags:
   - 运维
@@ -20,7 +19,6 @@ categories:
 装全局菜单、环境变量、GTK module 等前置步骤见：[Debian 13 XFCE 开发机整理：熄屏、软件源、全局菜单与防火墙](./2026-10-01-Debian 13 XFCE 开发机整理：熄屏、软件源、全局菜单与防火墙.md)。本文只挖 **居中 / Expand 反复写回** 这一块。
 
 ---
-
 ## AppMenu 是什么（不是另一套更好的菜单）
 
 面板里叫 **AppMenu Plugin** 的东西，包名是：

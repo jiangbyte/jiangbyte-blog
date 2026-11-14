@@ -1,7 +1,6 @@
 ---
 title: SparkSandbox
 date: '2026-08-31'
-link: spark-sandbox
 description: Linux 隔离执行 HTTP 服务：编译、限资源运行与多测例
 tags:
   - C++

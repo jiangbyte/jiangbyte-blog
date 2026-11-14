@@ -1,8 +1,6 @@
 ---
 title: Debian 13 友基 XP-Pen 数位板官方驱动与内核冲突排查固化
 date: '2026-10-07'
-link: >-
-  debian-13-you-ji-xp-pen-shu-wei-ban-guan-fang-qu-dong-yu-nei-he-chong-tu-pai-cha-gu-hua
 description: >-
   主机 dev（Debian 13 + GNOME X11）安装 ugeetablet 4.3 后画笔失效：内核争用、uinput 权限，以及随后 HVUG
   STYLUS 变成 floating 导致有压感无位移。结论与配置均来自本机命令与日志。
@@ -53,7 +51,6 @@ MyDeviceCallBack VID_28BD&PID_0905&MI_02_LINUX_0 1
 5. 第一阶段修复后出现第二现象：有压感，但笔位置（光标）不动；根因为 `HVUG STYLUS stylus` 处于 floating，已 reattach 并固化。
 
 ---
-
 ## 故障现象（本机观测）
 
 ### 1. 官方驱动与内核争用同一设备

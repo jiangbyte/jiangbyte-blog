@@ -49,8 +49,12 @@ for (const key of Object.keys(summaries as SummariesData)) {
  * @returns 文章描述文本
  */
 export function getPostDescription(post: BlogPost, locale: string = defaultLocale, maxLength: number = 150): string {
-  if (post.data.description) return post.data.description;
+  // 1. 手写 description（非空）优先
+  const manual = post.data.description?.trim();
+  if (manual) return manual;
+  // 2. 加密文用固定提示
   if (post.data.password) return t(locale, 'encrypted.post.description');
+  // 3. 从正文抽短摘要（列表约三行）
   return extractTextFromMarkdown(post.body ?? '', maxLength);
 }
 
@@ -80,13 +84,12 @@ export function getPostSummary(slug: string): string | null {
  * @returns 文章描述文本
  */
 export function getPostDescriptionWithSummary(post: BlogPost, locale: string = defaultLocale, maxLength: number = 150): string {
-  // 最高优先级：frontmatter 中的描述
-  if (post.data.description) {
-    return post.data.description;
-  }
-  if (post.data.password) {
-    return t(locale, 'encrypted.post.description');
-  }
+  // 1. frontmatter description（可选；空字符串视为未写）
+  const manual = post.data.description?.trim();
+  if (manual) return manual;
+  // 2. 加密文
+  if (post.data.password) return t(locale, 'encrypted.post.description');
+  // 3. AI 摘要 → 正文自动摘录（列表约三行）
   return getPostSummary(getPostSlug(post)) || extractTextFromMarkdown(post.body ?? '', maxLength);
 }
 

@@ -1,8 +1,6 @@
 ---
 title: Typora 自定义 github-cus 主题：掘金行内代码与标题自动编号
 date: '2026-10-04'
-link: >-
-  typora-zi-ding-yi-github-cus-zhu-ti-jue-jin-xing-nei-dai-ma-yu-biao-ti-zi-dong-bian-hao
 description: 从自带 github 主题复制出 github-cus，改成掘金风格行内代码，并用 CSS counter 给正文与大纲侧栏做从 h2 起的自动编号。
 tags:
   - Typora

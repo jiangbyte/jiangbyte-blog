@@ -1,7 +1,6 @@
 ---
 title: centos安装mysql
 date: '2026-10-01'
-link: centosan-zhuang-mysql
 description: >-
   CentOS 7 自带的包管理是 Yum 不是 Dnf，而且官方源里没有 MySQL，得自己加仓库。这篇文章就是我在 CentOS 7 上装 MySQL
   的完整记录，包括几种不同的安装方式，方便下次忘了回来看。

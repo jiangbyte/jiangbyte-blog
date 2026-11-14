@@ -1,7 +1,6 @@
 ---
 title: Object 源码解析（Oracle JDK 17）
 date: '2026-10-01'
-link: object-yuan-ma-jie-xi-oracle-jdk-17
 description: >-
   java.lang.Object 是 Java
   类型体系的根：除它自身外，每个类（含数组类型）最终都继承它，因而它定义的方法构成「所有对象共有的最小行为集」[^object-src]。下文依据本机
@@ -41,7 +40,6 @@ public class Object {
 JDK 17 这份 `Object.java` 里没有早期版本常见的 `registerNatives` 静态块；本地方法由 VM 侧绑定[^object-src]。这只是源文件形态上的事实，不影响对外 API。
 
 ---
-
 ## 无参构造 `Object()`：创建与初始化的分工
 
 ```java

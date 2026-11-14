@@ -1,7 +1,6 @@
 ---
 title: ubuntu安装redis
 date: '2026-10-01'
-link: ubuntuan-zhuang-redis
 description: Ubuntu 比 CentOS 省心点，APT 源里直接有 Redis，不用额外加仓库。不过版本可能不是最新的，想尝鲜还是得自己编译。
 tags:
   - 数据库

@@ -1,7 +1,6 @@
 ---
 title: 从 VuePress Theme Hope 迁移到 astro-koharu
 date: 2026-11-14
-link: migrate-vuepress-to-astro-koharu
 description: 文档站太单调了，想要更有个性的博客；对比 Hexo、Hugo 等后，因同目录 assets 图片等问题，最终选择 Astro 主题 astro-koharu。
 tags:
   - Astro
@@ -12,7 +11,6 @@ categories:
   - 工具
 sticky: true
 ---
-
 摸鱼猫泡泡原先跑在 **VuePress 2 + Theme Hope** 上。能写、能搜、侧栏也整齐，但用久了总觉得像一份「说明文档」：结构清楚，气质偏平，个性不够。
 
 换主题的直接原因：文档站气质太单调，想换成更适合个人博客的外壳。

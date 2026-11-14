@@ -98,10 +98,10 @@ test('content migration preserves URLs and is idempotent', () => {
 
     const first = planContentMigration({ contentDir, siteConfigPath: configPath });
     assert.equal(first.scannedFiles, 7);
-    assert.equal(first.changes.length, 5);
-    assert.equal(first.unchangedFiles, 2);
+    // slug→link / 去冗余 slug；无字段文章不再强制补 link
+    assert.equal(first.changes.length, 3);
+    assert.equal(first.unchangedFiles, 4);
     assert.deepEqual(first.errors, []);
-    assert.equal(first.changes.find((change) => change.file.endsWith('/en/note/paired.md'))?.link, 'custom-paired');
 
     applyContentMigration(first);
 
@@ -111,13 +111,13 @@ test('content migration preserves URLs and is idempotent', () => {
     assert.deepEqual(second.errors, []);
     assert.match(fs.readFileSync(path.join(contentDir, 'note/legacy.md'), 'utf8'), /^---\nlink: old\/public-url\n/);
     assert.doesNotMatch(fs.readFileSync(path.join(contentDir, 'note/both.md'), 'utf8'), /^slug:/m);
-    assert.match(fs.readFileSync(path.join(contentDir, 'note/中文.md'), 'utf8'), /^---\nlink: 'note\/中文'\n/);
+    assert.equal(Object.hasOwn(matter(fs.readFileSync(path.join(contentDir, 'note/中文.md'), 'utf8')).data, 'link'), false);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
 
-test('default-locale path stays authoritative when a translation has a custom link', () => {
+test('posts without link stay clean; translations may keep their own custom link', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'koharu-migrate-default-path-'));
   try {
     const configPath = writeSiteConfig(root);
@@ -128,41 +128,33 @@ test('default-locale path stays authoritative when a translation has a custom li
     const plan = runContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.deepEqual(plan.errors, []);
-    assert.equal(plan.changes.length, 1);
-    assert.equal(plan.changes[0]?.sourcePath, defaultFile);
-    assert.equal(plan.changes[0]?.link, 'note/foo');
-    assert.equal(matter(fs.readFileSync(defaultFile, 'utf8')).data.link, 'note/foo');
+    assert.equal(plan.changes.length, 0);
+    assert.equal(Object.hasOwn(matter(fs.readFileSync(defaultFile, 'utf8')).data, 'link'), false);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
 
-test('translations without links follow the default-locale path instead of another translation custom link', () => {
+test('missing links are not invented for translation counterparts', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'koharu-migrate-translation-path-'));
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    const defaultFile = writePost(contentDir, 'note/foo.md', '');
+    writePost(contentDir, 'note/foo.md', '');
     writePost(contentDir, 'en/note/foo.md', 'link: translated-custom\n');
     const untranslatedFile = writePost(contentDir, 'pt-BR/note/foo.md', '');
 
     const plan = runContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.deepEqual(plan.errors, []);
-    assert.deepEqual(
-      new Map(plan.changes.map(({ sourcePath, link }) => [sourcePath, link])),
-      new Map([
-        [defaultFile, 'note/foo'],
-        [untranslatedFile, 'note/foo'],
-      ]),
-    );
-    assert.equal(matter(fs.readFileSync(untranslatedFile, 'utf8')).data.link, 'note/foo');
+    assert.equal(plan.changes.length, 0);
+    assert.equal(Object.hasOwn(matter(fs.readFileSync(untranslatedFile, 'utf8')).data, 'link'), false);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
 
-test('generated links preserve Astro legacy path slugs', () => {
+test('path-only posts need no frontmatter link migration', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'koharu-migrate-path-slugs-'));
   try {
     const configPath = writeSiteConfig(root);
@@ -176,32 +168,25 @@ test('generated links preserve Astro legacy path slugs', () => {
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.deepEqual(plan.errors, []);
-    assert.deepEqual(
-      plan.changes.map(({ sourcePath, link }) => [path.relative(contentDir, sourcePath), link]),
-      [
-        ['Camel Case.md', 'camel-case'],
-        ['Foo Bar/index.md', 'foo-bar'],
-        ['en/Nested Folder/Index Post.mdx', 'nested-folder/index-post'],
-        ['note/Hello, World!.md', 'note/hello-world'],
-        ['pt-BR/Release Notes.md', 'release-notes'],
-      ],
-    );
+    assert.equal(plan.changes.length, 0);
+    assert.equal(plan.unchangedFiles, 5);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
 
-test('generated links preserve the legacy optional slug transliteration', () => {
+test('transliteration does not force writing link into frontmatter', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'koharu-migrate-transliterated-slugs-'));
   try {
     const configPath = writeSiteConfig(root, true);
     const contentDir = path.join(root, 'src/content/blog');
-    writePost(contentDir, '笔记/中文文章.md', '');
+    const file = writePost(contentDir, '笔记/中文文章.md', '');
 
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.deepEqual(plan.errors, []);
-    assert.equal(plan.changes[0]?.link, 'bi-ji/zhong-wen-wen-zhang');
+    assert.equal(plan.changes.length, 0);
+    assert.equal(Object.hasOwn(matter(fs.readFileSync(file, 'utf8')).data, 'link'), false);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -337,7 +322,7 @@ test('content migration rejects symlinks without writing their external targets'
   }
 });
 
-test('generated links remain strings for YAML implicit scalar values', () => {
+test('path-only posts with YAML-implicit filenames stay without link', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'koharu-migrate-yaml-string-'));
   try {
     const configPath = writeSiteConfig(root);
@@ -347,12 +332,11 @@ test('generated links remain strings for YAML implicit scalar values', () => {
 
     const plan = runContentMigration({ contentDir, siteConfigPath: configPath });
     assert.deepEqual(plan.errors, []);
-    assert.equal(plan.changes.length, implicitScalars.length);
+    assert.equal(plan.changes.length, 0);
 
     for (const value of implicitScalars) {
       const raw = fs.readFileSync(path.join(contentDir, `${value}.md`), 'utf8');
-      assert.match(raw, new RegExp(`^---\\nlink: '${value}'\\n`));
-      assert.equal(matter(raw).data.link, value);
+      assert.equal(Object.hasOwn(matter(raw).data, 'link'), false);
     }
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
@@ -374,7 +358,7 @@ test('invalid slug values block every write even when link exists', () => {
 
     const plan = runContentMigration({ contentDir, siteConfigPath: configPath });
     assert.equal(plan.errors.length, 3);
-    assert.equal(plan.changes.length, 1);
+    assert.equal(plan.changes.length, 0);
     for (const issue of plan.errors) assert.match(issue.message, /slug 必须是非空字符串/);
     for (const file of files) assert.equal(fs.readFileSync(file, 'utf8'), originals.get(file));
   } finally {
@@ -404,7 +388,7 @@ test('apply rejects changes to previously unchanged inputs', () => {
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    const pendingFile = writePost(contentDir, 'pending.md', '');
+    const pendingFile = writePost(contentDir, 'pending.md', 'slug: pending\n');
     const stableFile = writePost(contentDir, 'stable.md', 'link: stable\n');
     const pendingOriginal = fs.readFileSync(pendingFile, 'utf8');
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
@@ -423,7 +407,7 @@ test('apply rejects new content files added after planning', () => {
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    const pendingFile = writePost(contentDir, 'pending.md', '');
+    const pendingFile = writePost(contentDir, 'pending.md', 'slug: pending\n');
     const pendingOriginal = fs.readFileSync(pendingFile, 'utf8');
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
 
@@ -441,8 +425,9 @@ test('apply rechecks content immediately before installing an atomic write', (co
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    const pendingFile = writePost(contentDir, 'pending.md', '');
+    const pendingFile = writePost(contentDir, 'pending.md', 'slug: pending\n');
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
+    assert.ok(plan.changes[0]);
     const writeFileSync = fs.writeFileSync.bind(fs);
     const concurrent = fs.readFileSync(pendingFile, 'utf8').replace('title: test', 'title: concurrently edited');
     let injected = false;
@@ -476,12 +461,13 @@ test('atomic migration writes preserve the source file mode', () => {
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    const pendingFile = writePost(contentDir, 'pending.md', '');
+    const pendingFile = writePost(contentDir, 'pending.md', 'slug: pending\n');
     fs.chmodSync(pendingFile, 0o640);
 
     runContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.equal(fs.statSync(pendingFile).mode & 0o777, 0o640);
+    assert.equal(matter(fs.readFileSync(pendingFile, 'utf8')).data.link, 'pending');
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -493,12 +479,12 @@ test('atomic migration supports source names near the filesystem component limit
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
     const longName = `${'a'.repeat(240)}.md`;
-    const pendingFile = writePost(contentDir, longName, '');
+    const pendingFile = writePost(contentDir, longName, `slug: ${'a'.repeat(240)}\n`);
 
     const plan = runContentMigration({ contentDir, siteConfigPath: configPath });
 
     assert.deepEqual(plan.errors, []);
-    assert.equal(matter(fs.readFileSync(pendingFile, 'utf8')).data.link, longName.slice(0, -3));
+    assert.equal(matter(fs.readFileSync(pendingFile, 'utf8')).data.link, 'a'.repeat(240));
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -510,12 +496,13 @@ test('apply rolls back every installed atomic write when a later write fails', (
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
     const files = [
-      writePost(contentDir, 'first.md', ''),
-      writePost(contentDir, 'second.md', ''),
-      writePost(contentDir, 'third.md', ''),
+      writePost(contentDir, 'first.md', 'slug: first\n'),
+      writePost(contentDir, 'second.md', 'slug: second\n'),
+      writePost(contentDir, 'third.md', 'slug: third\n'),
     ];
     const originals = new Map(files.map((file) => [file, fs.readFileSync(file, 'utf8')]));
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
+    assert.equal(plan.changes.length, 3);
     const renameSync = fs.renameSync.bind(fs);
     let updatedWrites = 0;
     const rollbackPaths: string[] = [];
@@ -553,9 +540,10 @@ test('apply reports both write and rollback failures', (context) => {
   try {
     const configPath = writeSiteConfig(root);
     const contentDir = path.join(root, 'src/content/blog');
-    writePost(contentDir, 'first.md', '');
-    writePost(contentDir, 'second.md', '');
+    writePost(contentDir, 'first.md', 'slug: first\n');
+    writePost(contentDir, 'second.md', 'slug: second\n');
     const plan = planContentMigration({ contentDir, siteConfigPath: configPath });
+    assert.equal(plan.changes.length, 2);
     const renameSync = fs.renameSync.bind(fs);
     let updatedWrites = 0;
     let rollbackWrites = 0;
@@ -605,7 +593,7 @@ test('restore replaces user snapshots and migrates restored content', () => {
     writeSiteConfig(root);
     fs.writeFileSync(path.join(root, 'config/new-theme.yaml'), 'keep: true\n');
 
-    writePost(path.join(stage, 'content/blog'), 'restored.md', '');
+    writePost(path.join(stage, 'content/blog'), 'restored.md', 'slug: restored\n');
     fs.mkdirSync(path.join(stage, 'pages'), { recursive: true });
     fs.mkdirSync(path.join(stage, 'img'), { recursive: true });
     fs.writeFileSync(path.join(stage, 'img/restored.txt'), 'restored');
@@ -632,7 +620,7 @@ test('restore replaces user snapshots and migrates restored content', () => {
     assert.equal(output.migration?.changes.length, 1);
     assert.equal(output.migration?.errors.length, 0);
     assert.equal(fs.existsSync(path.join(contentDir, 'stale.md')), false);
-    assert.match(fs.readFileSync(path.join(contentDir, 'restored.md'), 'utf8'), /^---\nlink: 'restored'\n/);
+    assert.match(fs.readFileSync(path.join(contentDir, 'restored.md'), 'utf8'), /^---\nlink: restored\n/);
     assert.equal(fs.existsSync(path.join(root, 'public/img/stale.txt')), false);
     assert.equal(fs.readFileSync(path.join(root, 'public/img/restored.txt'), 'utf8'), 'restored');
     assert.equal(fs.existsSync(path.join(root, 'src/pages/stale.md')), false);

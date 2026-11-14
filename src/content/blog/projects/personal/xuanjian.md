@@ -1,7 +1,6 @@
 ---
 title: 玄鉴
 date: '2026-09-02'
-link: xuanjian
 description: AI 桌面运维工作台：主机、终端、SFTP 与 LangGraph Agent
 tags:
   - Tauri

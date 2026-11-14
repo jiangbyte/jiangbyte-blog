@@ -1,7 +1,6 @@
 ---
 title: 把略微成型的开源项目迁到 jiangfolio 组织
 date: 2026-11-14
-link: migrate-repos-to-jiangfolio-org
 description: 个人 GitHub 账号仓库越来越杂，建了 jiangfolio 组织专门放相对成型的开源项目；记录动机，以及用 gh 一键 Transfer 的迁移过程。
 tags:
   - GitHub
@@ -11,7 +10,6 @@ tags:
 categories:
   - 工具
 ---
-
 个人账号 [`jiangbyte`](https://github.com/jiangbyte) 下面堆的仓库越来越多：实验草稿、学习笔记、半成品和真正能给人用的工具混在一起。别人点开 profile，很难一眼分清「哪些值得看」。
 
 于是建了组织 [`jiangfolio`](https://github.com/jiangfolio)，把相对成型的开源项目迁过去；个人账号继续放杂项。

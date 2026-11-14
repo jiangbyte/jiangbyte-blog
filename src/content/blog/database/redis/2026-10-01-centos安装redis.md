@@ -1,7 +1,6 @@
 ---
 title: centos安装redis
 date: '2026-10-01'
-link: centosan-zhuang-redis
 description: CentOS 7 默认源里没有 Redis，得自己想办法。这篇整理了几种装法，从最省事的 Yum 到手动编译，看情况选就行。
 tags:
   - 数据库

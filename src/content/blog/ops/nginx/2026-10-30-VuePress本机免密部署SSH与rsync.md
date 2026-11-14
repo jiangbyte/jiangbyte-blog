@@ -1,7 +1,6 @@
 ---
 title: VuePress 本机免密部署：SSH 密钥与 rsync
 date: '2026-10-30'
-link: vuepressben-ji-mian-mi-bu-shu-sshyu-rsync
 description: 为本站配置 SSH Host 别名与部署私钥，配合 scripts/deploy.sh 一键构建并 rsync；记录密钥损坏与 agent 拒签的排障。
 tags:
   - 运维

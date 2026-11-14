@@ -1,7 +1,6 @@
 ---
 title: 用 conda 固定默认环境 normal
 date: '2026-10-01'
-link: yong-conda-gu-ding-mo-ren-huan-jing-normal
 description: 机器上同时有三套 Python 很容易搅在一起：
 tags:
   - Conda

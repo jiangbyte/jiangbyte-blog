@@ -300,7 +300,8 @@ function emptyPlan(snapshot: ContentMigrationSnapshot, errors: ContentMigrationI
  * - existing `link` stays authoritative;
  * - legacy `slug` is renamed to `link` when no link exists;
  * - redundant `slug` is removed when `link` already exists;
- * - posts with neither field receive their locale-free file path as `link`.
+ * - posts with neither field keep frontmatter clean: public URL comes from the
+ *   locale-free file path (romanized when `enableSlugTransliteration` is on).
  */
 export function planContentMigration(options: ContentMigrationOptions = {}): ContentMigrationPlan {
   const workspace = options.workspace ?? DEFAULT_WORKSPACE;
@@ -394,6 +395,7 @@ export function planContentMigration(options: ContentMigrationOptions = {}): Con
       );
       action = 'rename-slug';
     } else if (!link) {
+      // 1. 无 link/slug：不写回 frontmatter，公开 URL 由运行时按路径（可拼音）解析
       const pathLink = getPathLink(relativePath, localeConfig);
       const locale = getContentLocale(relativePath, localeConfig);
       const defaultLocaleLink = locale === localeConfig.defaultLocale ? undefined : defaultLocaleLinks.get(pathLink);
@@ -407,8 +409,7 @@ export function planContentMigration(options: ContentMigrationOptions = {}): Con
         continue;
       }
       targetLink = defaultLocaleLink ?? counterpartCandidates?.values().next().value ?? pathLink;
-      updated = editFrontmatterField(raw, { kind: 'add-link', link: targetLink });
-      action = 'add-link';
+      // 2. 仅登记碰撞用的有效链接，不生成 add-link 变更
     }
 
     if (!targetLink) {

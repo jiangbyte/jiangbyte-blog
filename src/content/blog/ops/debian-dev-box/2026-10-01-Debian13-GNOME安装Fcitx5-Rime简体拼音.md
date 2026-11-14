@@ -1,7 +1,6 @@
 ---
 title: Debian13-GNOME安装Fcitx5-Rime简体拼音
 date: '2026-10-01'
-link: debian13-gnomean-zhuang-fcitx5-rimejian-ti-pin-yin
 description: 记录时间：2026-10-26
 tags:
   - 运维
@@ -19,7 +18,6 @@ categories:
 原先系统是 IBus + `ibus-libpinyin`。不卸载 IBus（GNOME 有依赖），改用 `im-config` 切到 Fcitx5。
 
 ---
-
 ## 1. 安装软件包
 
 ```bash

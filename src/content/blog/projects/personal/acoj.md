@@ -1,7 +1,6 @@
 ---
 title: ACOJ
 date: '2026-08-31'
-link: acoj
 description: 在线评测平台：题库、提交、多执行机调度与双端门户
 tags:
   - OJ
