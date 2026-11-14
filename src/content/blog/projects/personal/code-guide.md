@@ -9,7 +9,7 @@ tags:
 categories:
   - 项目
 ---
-- 仓库：<https://github.com/jiangbyte/code-guide>
+- 仓库：<https://github.com/jiangbyte/jiangbyte-blog>
 - 主页：<https://jiangbyte.cn>
 
 **code-guide**（摸鱼猫泡泡）：基于 [astro-koharu](https://github.com/cosZone/astro-koharu) 的静态博客，记录 Java、工具与工程实践。

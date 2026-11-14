@@ -4,7 +4,7 @@ Guidance for AI coding agents (Claude Code, Codex, etc.) working in this reposit
 
 ## Project Overview
 
-摸鱼猫泡泡（code-guide）是基于 [astro-koharu](https://github.com/cosZone/astro-koharu) 的个人站点 fork。React 交互、Tailwind 样式；**不再使用** `pnpm koharu update`，主题层改动按本仓维护。
+摸鱼猫泡泡（jiangbyte-blog）是基于 [astro-koharu](https://github.com/cosZone/astro-koharu) 的个人站点 fork。React 交互、Tailwind 样式；**不再使用** `pnpm koharu update`，主题层改动按本仓维护。
 
 ## Core Engineering Principles
 
