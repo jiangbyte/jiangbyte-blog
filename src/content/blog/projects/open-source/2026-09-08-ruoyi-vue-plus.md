@@ -16,14 +16,14 @@ categories:
 - 上游：<https://github.com/dromara/RuoYi-Vue-Plus>（`6.X`）
 - 定制前端：<https://github.com/jiangbyte/plus-ui>
 
-**RuoYi-Vue-Plus** 本仓是上游的 **同步 Fork**：跟踪官方多租户后台（Sa-Token、MyBatis-Plus、WarmFlow、OSS 等），本地不另改业务逻辑，用来和 [plus-ui](./plus-ui.md) 定制前端配套联调与部署。
+**RuoYi-Vue-Plus** 本仓是上游的 **同步 Fork**：跟踪官方多租户后台（Sa-Token、MyBatis-Plus、WarmFlow、OSS 等），本地不另改业务逻辑，用来和 [plus-ui](./2026-09-30-plus-ui.md) 定制前端配套联调与部署。
 
 官方文档：<https://plus-doc.dromara.org>
 
 ## 用途
 
 - 跟上游 `6.X` 保持同步，方便拉最新修复与依赖升级
-- 与本站 [plus-ui](./plus-ui.md) 一对一对接；界面定制落在前端仓，后端跟官方
+- 与本站 [plus-ui](./2026-09-30-plus-ui.md) 一对一对接；界面定制落在前端仓，后端跟官方
 
 ## 技术栈（上游）
 

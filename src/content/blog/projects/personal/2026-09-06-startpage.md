@@ -30,6 +30,11 @@ flowchart TB
   page --> search
 ```
 
+
+## 界面预览
+
+![起始页](./assets/startpage/home.png)
+
 ## 特性
 
 - **数据即代码**：分类与条目在 `src/data/bookmarks.ts`；字符串简写等价于只填 `url`

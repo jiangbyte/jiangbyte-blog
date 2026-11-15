@@ -14,7 +14,7 @@ Astro + [astro-koharu](https://github.com/cosZone/astro-koharu) fork · 记录�
 
 个人站点源码，在线阅读：[jiangbyte.cn](https://jiangbyte.cn)
 
-本仓基于 astro-koharu 深度定制，**不再跟随** `pnpm koharu update`。日常改站点以配置与文章为主。
+本仓基于 astro-koharu 定制。
 
 ---
 

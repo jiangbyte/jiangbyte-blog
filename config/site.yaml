@@ -725,7 +725,7 @@ bgm:
   audio: []
 
 dev:
-  localProjectPath: '/home/jiang/workspace/projects/mine/code-guide'
+  localProjectPath: '/home/jiang/workspace/projects/mine/jiangbyte-blog'
   contentRelativePath: 'src/content/blog'
   editors:
     - id: cursor
