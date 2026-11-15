@@ -395,7 +395,7 @@ motion:
 # 使用本地 CMS 编辑文章时也需要开启；修改后重启开发服务器或重新构建
 # =============================================================================
 editor:
-  enabled: true
+  enabled: false
 
 # =============================================================================
 # Colophon (落款)
@@ -500,7 +500,7 @@ colophon:
 postActions:
   copyMarkdown: true
   downloadMarkdown: true
-  openInEditor: everyone
+  openInEditor: off
 
 # =============================================================================
 # Navigation Routes
