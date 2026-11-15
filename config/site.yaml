@@ -524,6 +524,14 @@ navigation:
   - name: 项目集
     path: /projects
     icon: ri:apps-2-line
+  - name: 简历
+    path: https://resume.jiangbyte.cn
+    icon: ri:file-user-line
+    localeIndependent: true
+  - name: 起始页
+    path: https://start.jiangbyte.cn
+    icon: ri:compass-3-line
+    localeIndependent: true
   - name: 软考
     path: /soft-exam
     icon: ri:book-read-line
