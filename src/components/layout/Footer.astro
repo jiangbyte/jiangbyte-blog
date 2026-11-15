@@ -65,7 +65,12 @@ const startYear = siteConfig?.startYear ?? currentYear;
 
     <!-- 英文正式版权 + 备案 + 主题致谢 -->
     <div class="site-footer__meta text-muted-foreground flex max-w-3xl flex-col items-center gap-2.5 text-center text-xs leading-relaxed sm:text-sm">
-      <p class="site-footer__line flex flex-wrap items-center justify-center gap-x-1" itemprop="copyrightHolder">
+      {/* 英文行加 notranslate，避免浏览器翻译把译文叠在原文上形成重影 */}
+      <p
+        class="site-footer__line notranslate flex flex-wrap items-center justify-center gap-x-1"
+        itemprop="copyrightHolder"
+        translate="no"
+      >
         <span>©</span>
         <span class="font-medium">{startYear}{startYear !== currentYear ? `-${currentYear}` : ''}</span>
         <SakuraSVG className="mx-0.5 size-4 animate-spin text-[#9ec8ef] duration-10000" />
@@ -110,7 +115,10 @@ const startYear = siteConfig?.startYear ?? currentYear;
         </p>
       )}
 
-      <p class="site-footer__line text-muted-foreground/70 flex flex-wrap items-center justify-center gap-x-1.5">
+      <p
+        class="site-footer__line notranslate text-muted-foreground/70 flex flex-wrap items-center justify-center gap-x-1.5"
+        translate="no"
+      >
         <span>Powered by</span>
         <a
           href="https://github.com/cosZone/astro-koharu"
