@@ -37,9 +37,10 @@ pnpm install
 pnpm dev           # http://localhost:4321
 pnpm build         # 产出 dist/
 pnpm preview
-pnpm run deploy    # 构建并 rsync 到 nginx（需本机 SSH Host；勿用 pnpm deploy）
+pnpm run deploy    # 构建并 rsync 到 VPS（→ /opt/nginx-gateway/sites/blog；勿用 pnpm deploy）
 ```
 
+- 站点：https://jiangbyte.cn
 - 站点配置：[`config/site.yaml`](./config/site.yaml)
 - 文章目录：`src/content/blog/`
 - 写作室：`/editor`（需 `editor.enabled: true`）
