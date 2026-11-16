@@ -29,8 +29,7 @@ try {
   const { directory: destination, isNew: isNewDirectory } = await askDirectory(directories);
   const timestamp = formatSiteDateTime(new Date(), siteConfig.site?.timezone || 'Asia/Shanghai');
   const date = timestamp.slice(0, 10);
-  const slug = createSlug(title);
-  const filename = `${date}-${slug}.md`;
+  const filename = `${date}-${createFilenameTitle(title)}.md`;
   const targetPath = path.join(BLOG_ROOT, destination.relativePath, filename);
   const frontmatter = YAML.stringify({
     title,
@@ -291,12 +290,22 @@ function parseTags(value) {
   ];
 }
 
-function createSlug(title) {
-  return slugify(title, { separator: '-' }).replace(/-+/g, '-').replace(/^-|-$/g, '') || 'post';
+function createFilenameTitle(title) {
+  return (
+    title
+      .normalize('NFC')
+      .replace(/[\\/:*?"<>|\p{Cc}]/gu, '-')
+      .replace(/\s+/g, ' ')
+      .trim() || '未命名文章'
+  );
+}
+
+function createCategorySlug(title) {
+  return slugify(title, { separator: '-' }).replace(/-+/g, '-').replace(/^-|-$/g, '') || 'category';
 }
 
 function createUniqueSlug(value, existingSlugs) {
-  const base = createSlug(value);
+  const base = createCategorySlug(value);
   let candidate = base;
   let suffix = 2;
   const usedSlugs = new Set(existingSlugs);
